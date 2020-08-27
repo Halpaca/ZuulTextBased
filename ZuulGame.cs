@@ -9,7 +9,8 @@ namespace ZuulTextBased
 {
     internal class ZuulGame : IObserver
     {
-        private bool _exit = false;
+        private bool _quit = false;
+        public WriteTarget WriteTarget { get; set; }
 
         public World World { get; private set; }
         public Player Player { get; private set; }
@@ -32,20 +33,78 @@ namespace ZuulTextBased
         {
             do
             {
-                String input = Console.ReadLine();
+                string input = Console.ReadLine();
                 Command c = CommandFactory.CreateCommand(Parser.GetCommand(input));
-                c.Execute(CommandSubject);
+                c.Execute(Parser.Args, CommandSubject);
                 World.Step();
             }
-            while (!_exit);
+            while (!_quit);
         }
 
-        public void OnNotify(string state)
+        public void OnNotify(CommandEvent state)
         {
-            if(state.Equals("exit"))
+            switch(state)
             {
-                _exit = true;
+                case WriteEvent:
+                    WriteOut(((WriteEvent)state).Message);
+                    break;
+                case QuitEvent:
+                    Quit();
+                    break;
             }
+        }
+
+        /// <summary>
+        /// The only function that writes out text to the user.
+        /// To be refactored to send to a custom window instead of the console
+        /// </summary>
+        /// <param name="message"></param>
+        private void WriteOut(string message)
+        {
+            switch(WriteTarget)
+            {
+                case WriteTarget.Console:
+                Console.WriteLine(message);
+                    break;
+            }
+        }
+
+        private void Quit()
+        {
+            if(PromptUser("Really Quit?", "y", "n") == true)
+            {
+                WriteOut("OK! See you...");
+                _quit = true;
+            }
+            else
+            {
+                WriteOut("OK! Returning...");
+                //TODO: write last world step
+            }
+        }
+
+        private bool PromptUser(string message, string positive, string negative)
+        {
+            WriteOut(message + $" {positive}/{negative}");
+            string input = Console.ReadLine();
+            if(input.Equals(positive, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            else if(input.Equals(negative, StringComparison.OrdinalIgnoreCase))
+            {
+                return false;
+            }
+            else
+            {
+                WriteOut($"Please answer with {positive} or {negative}");
+                return PromptUser(message, positive, negative);
+            }
+        }
+
+        ~ZuulGame()
+        {
+            CommandSubject.Unsubscribe(this);
         }
     }
 }

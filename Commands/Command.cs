@@ -7,6 +7,6 @@ namespace ZuulTextBased.Commands
 {
     abstract class Command
     {
-        public abstract void Execute(CommandSubject subject);
+        public abstract void Execute(string[] args, CommandSubject subject);
     }
 }

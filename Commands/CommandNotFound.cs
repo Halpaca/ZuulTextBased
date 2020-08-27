@@ -10,9 +10,9 @@ namespace ZuulTextBased.Commands
     /// </summary>
     class CommandNotFound : Command
     {
-        public override void Execute(CommandSubject subject)
+        public override void Execute(string[] args, CommandSubject subject)
         {
-
+            subject.Event(new WriteEvent($"Command not found with name: {args[0]}"));
         }
     }
 }

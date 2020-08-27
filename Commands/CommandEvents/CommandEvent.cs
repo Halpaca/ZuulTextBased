@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ZuulTextBased.Commands.CommandEvents
 {
-    internal class QuitEvent : CommandEvent
+    internal class CommandEvent
     {
 
     }

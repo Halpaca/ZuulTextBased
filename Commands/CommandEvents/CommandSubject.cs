@@ -8,11 +8,10 @@ namespace ZuulTextBased.Commands.CommandEvents
     class CommandSubject
     {
         public List<IObserver> Observers { get; private set; }
-        public string State { get; private set; }
+        public CommandEvent State { get; private set; }
 
         public CommandSubject()
         {
-            State = String.Empty;
             Observers = new List<IObserver>();
         }
 
@@ -28,16 +27,13 @@ namespace ZuulTextBased.Commands.CommandEvents
                 Observers.Remove(observer);
             }
         }
-        public void SetState(string newState)
+        public void Event(CommandEvent newState)
         {
-            if (!State.Equals(newState))
-            {
-                State = newState;
-                NotifyObservers();
-            }
+            State = newState;
+            Notify();
         }
 
-        private void NotifyObservers()
+        private void Notify()
         {
             foreach(IObserver observer in Observers)
             {

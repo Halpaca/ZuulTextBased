@@ -12,10 +12,10 @@ namespace ZuulTextBased.Utility
         public Lexicon()
         {
             Commands = new Dictionary<string, Type>(StringComparer.OrdinalIgnoreCase);
-            Init();
+            MapCommands();
         }
 
-        public Type GetCommandOf(String s)
+        public Type GetCommandTypeOf(String s)
         {
             if (Commands.ContainsKey(s))
             {
@@ -30,9 +30,10 @@ namespace ZuulTextBased.Utility
         /// <summary>
         /// Temporary function for filling the lexicon, to be migrated to an IO stream later.
         /// </summary>
-        private void Init()
+        private void MapCommands()
         {
-            Commands.Add("exit", typeof(ExitCommand));
+            Commands.Add("exit", typeof(QuitCommand));
+            Commands.Add("quit", typeof(QuitCommand));
         }
     }
 }
