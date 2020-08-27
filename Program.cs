@@ -7,8 +7,8 @@ namespace ZuulTextBased
     {
         static void Main(string[] args)
         {
+            Logger.Instance.LogLevel = LogLevel.Debug;
             ZuulGame game = new ZuulGame();
-            game.WriteTarget = WriteTarget.Console;
             game.Run();
         }
     }

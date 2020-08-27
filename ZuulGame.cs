@@ -11,7 +11,6 @@ namespace ZuulTextBased
     {
         private bool _quit = false;
         public WriteTarget WriteTarget { get; set; }
-
         public World World { get; private set; }
         public Player Player { get; private set; }
         public Parser Parser { get; private set; }
@@ -83,9 +82,9 @@ namespace ZuulTextBased
             }
         }
 
-        private bool PromptUser(string message, string positive, string negative)
+        private bool PromptUser(string question, string positive, string negative)
         {
-            WriteOut(message + $" {positive}/{negative}");
+            WriteOut(question + $" {positive}/{negative}");
             string input = Console.ReadLine();
             if(input.Equals(positive, StringComparison.OrdinalIgnoreCase))
             {
@@ -98,7 +97,7 @@ namespace ZuulTextBased
             else
             {
                 WriteOut($"Please answer with {positive} or {negative}");
-                return PromptUser(message, positive, negative);
+                return PromptUser(question, positive, negative);
             }
         }
 
