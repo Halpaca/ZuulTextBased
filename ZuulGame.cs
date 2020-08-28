@@ -3,7 +3,9 @@ using System.Net.Http.Headers;
 using ZuulTextBased.Commands;
 using ZuulTextBased.Commands.CommandEvents;
 using ZuulTextBased.Game;
+using ZuulTextBased.Game.World;
 using ZuulTextBased.Utility;
+using ZuulTextBased.Utility.Interpretation;
 
 namespace ZuulTextBased
 {
@@ -11,7 +13,7 @@ namespace ZuulTextBased
     {
         private bool _quit = false;
         public WriteTarget WriteTarget { get; set; }
-        public World World { get; private set; }
+        public Dungeon Dungeon { get; private set; }
         public Player Player { get; private set; }
         public Parser Parser { get; private set; }
         public CommandFactory CommandFactory { get; private set; }
@@ -23,7 +25,7 @@ namespace ZuulTextBased
             CommandSubject.Subscibe(this);
             Player = new Player();
             CommandSubject.Subscibe(Player);
-            World = new World(Player);
+            Dungeon = new Dungeon();
             Parser = new Parser();
             CommandFactory = new CommandFactory();
         }
@@ -35,7 +37,7 @@ namespace ZuulTextBased
                 string input = Console.ReadLine();
                 Command c = CommandFactory.CreateCommand(Parser.GetCommand(input));
                 c.Execute(Parser.Args, CommandSubject);
-                World.Step();
+                Dungeon.Step();
             }
             while (!_quit);
         }

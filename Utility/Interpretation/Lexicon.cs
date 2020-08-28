@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ZuulTextBased.Commands;
 
-namespace ZuulTextBased.Utility
+namespace ZuulTextBased.Utility.Interpretation
 {
     class Lexicon
     {

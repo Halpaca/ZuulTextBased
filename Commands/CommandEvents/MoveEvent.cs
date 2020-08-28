@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ZuulTextBased.Commands.CommandEvents
 {
-    internal abstract class CommandEvent
+    class MoveEvent : CommandEvent
     {
 
     }

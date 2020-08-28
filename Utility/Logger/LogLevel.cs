@@ -1,4 +1,4 @@
-﻿namespace ZuulTextBased.Utility
+﻿namespace ZuulTextBased.Utility.Logger
 {
     enum LogLevel
     {

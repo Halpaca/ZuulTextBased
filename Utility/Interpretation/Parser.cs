@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ZuulTextBased.Commands;
 
-namespace ZuulTextBased.Utility
+namespace ZuulTextBased.Utility.Interpretation
 {
     internal class Parser
     {
