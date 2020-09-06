@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZuulTextBased", "ZuulTextBased.csproj", "{63FD0C9A-202A-43AE-BA3E-36E4A62A92D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZuulTextBased", "ZuulTextBased.csproj", "{63FD0C9A-202A-43AE-BA3E-36E4A62A92D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZuulTextBasedTests", "..\ZuulTextBasedTests\ZuulTextBasedTests.csproj", "{C97E6191-3F96-48F6-9741-5016C6C88402}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{63FD0C9A-202A-43AE-BA3E-36E4A62A92D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63FD0C9A-202A-43AE-BA3E-36E4A62A92D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63FD0C9A-202A-43AE-BA3E-36E4A62A92D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C97E6191-3F96-48F6-9741-5016C6C88402}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C97E6191-3F96-48F6-9741-5016C6C88402}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C97E6191-3F96-48F6-9741-5016C6C88402}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C97E6191-3F96-48F6-9741-5016C6C88402}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

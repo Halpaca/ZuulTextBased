@@ -11,10 +11,5 @@ namespace ZuulTextBased.Game
         {
 
         }
-
-        public override void Move()
-        {
-
-        }
     }
 }

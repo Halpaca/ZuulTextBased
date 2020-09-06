@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ZuulTextBased.Game.World;
 
 namespace ZuulTextBased.Utility.Logger
 {
