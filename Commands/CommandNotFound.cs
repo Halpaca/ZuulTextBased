@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ZuulTextBased.Commands.CommandEvents;
+using ZuulTextBased.Utility.DataStructures;
 
 namespace ZuulTextBased.Commands
 {
@@ -10,9 +11,9 @@ namespace ZuulTextBased.Commands
     /// </summary>
     class CommandNotFound : Command
     {
-        public override void Execute(string[] args, CommandSubject subject)
+        public override void Execute(KeyValuePair<string, ArgData>[] args, CommandSubject subject)
         {
-            subject.Event(new WriteEvent($"Command not found with name: {args[0]}"));
+            subject.Event(new WriteEvent($"Command not found with name: {args[0].Key}"));
         }
     }
 }

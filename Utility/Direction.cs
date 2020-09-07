@@ -2,6 +2,7 @@
 {
     enum Direction
     {
+        None,
         North,
         South,
         East,

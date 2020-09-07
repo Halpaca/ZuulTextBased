@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ZuulTextBased.Game.Utility;
 using ZuulTextBased.Game.World.Entities;
-using ZuulTextBased.Utility.Logger;
+using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game.World.Structures
 {
@@ -24,7 +24,7 @@ namespace ZuulTextBased.Game.World.Structures
             }
             else
             {
-                Logger.Instance.Error("Area", $"Entrance already exists in direction {direction}!");
+                Logger.Instance.Warn("Area", $"Entrance already exists in direction {direction}");
             }
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZuulTextBased.Utility
+namespace ZuulTextBased.Utility.DataStructures
 {
     public class TwoWayValuePair<T>
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZuulTextBased.Game.World.Entities.Body_Structure
+namespace ZuulTextBased.Game.World.Entities.BodyStructure
 {
     internal class Body
     {

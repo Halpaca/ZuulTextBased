@@ -1,6 +1,6 @@
 ﻿using System;
 using ZuulTextBased.Utility;
-using ZuulTextBased.Utility.Logger;
+using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased
 {

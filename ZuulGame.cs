@@ -4,6 +4,7 @@ using ZuulTextBased.Commands;
 using ZuulTextBased.Commands.CommandEvents;
 using ZuulTextBased.Game;
 using ZuulTextBased.Game.World;
+using ZuulTextBased.Game.World.Structures;
 using ZuulTextBased.Utility;
 using ZuulTextBased.Utility.Interpretation;
 
@@ -16,7 +17,6 @@ namespace ZuulTextBased
         public Dungeon Dungeon { get; private set; }
         public Player Player { get; private set; }
         public Parser Parser { get; private set; }
-        public CommandFactory CommandFactory { get; private set; }
         public CommandSubject CommandSubject { get; private set; }
 
         public ZuulGame()
@@ -27,15 +27,17 @@ namespace ZuulTextBased
             CommandSubject.Subscibe(Player);
             Dungeon = new Dungeon();
             Parser = new Parser();
-            CommandFactory = new CommandFactory();
         }
 
         internal void Run()
         {
+            WriteOut("Welcome, type stuff below:");
             do
             {
+                Console.Write("> ");
                 string input = Console.ReadLine();
-                Command c = CommandFactory.CreateCommand(Parser.GetCommand(input));
+                Parser.Analyze(input);
+                Command c = Parser.GetCommand();
                 c.Execute(Parser.Args, CommandSubject);
                 Dungeon.Step();
             }
@@ -56,10 +58,10 @@ namespace ZuulTextBased
         }
 
         /// <summary>
-        /// The only function that writes out text to the user.
+        /// The only function that should write out text to the player.
         /// To be refactored to send to a custom window instead of the console
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">The message to be printed</param>
         private void WriteOut(string message)
         {
             switch(WriteTarget)
@@ -74,7 +76,7 @@ namespace ZuulTextBased
         {
             if(PromptUser("Really Quit?", "y", "n") == true)
             {
-                WriteOut("OK! See you...");
+                WriteOut("OK, see you!");
                 _quit = true;
             }
             else

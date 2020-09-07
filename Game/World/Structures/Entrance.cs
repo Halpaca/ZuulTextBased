@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using ZuulTextBased.Game.World.Entities;
 using ZuulTextBased.Utility;
-using ZuulTextBased.Utility.Logger;
+using ZuulTextBased.Utility.DataStructures;
+using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game.World.Structures
 {

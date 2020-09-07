@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ZuulTextBased.Game.World;
 
-namespace ZuulTextBased.Utility.Logger
+namespace ZuulTextBased.Utility.Logging
 {
     internal class Logger
     {
@@ -19,6 +19,9 @@ namespace ZuulTextBased.Utility.Logger
             }
         }
 
+        /// <summary>
+        /// Used Sparingly for debugging purposes and stubs
+        /// </summary>
         public void Debug(string source, string message)
         {
             if(LogLevel.Debug <= LogLevel)
@@ -27,6 +30,9 @@ namespace ZuulTextBased.Utility.Logger
             }
         }
 
+        /// <summary>
+        /// Used for notifying the user for furtherings in the program
+        /// </summary>
         public void Info(string source, string message)
         {
             if (LogLevel.Info <= LogLevel)
@@ -35,6 +41,9 @@ namespace ZuulTextBased.Utility.Logger
             }
         }
 
+        /// <summary>
+        /// Used to warn the user for mild inconviniences, where the program can still run
+        /// </summary>
         public void Warn(string source, string message)
         {
             if (LogLevel.Warn <= LogLevel)
@@ -43,6 +52,9 @@ namespace ZuulTextBased.Utility.Logger
             }
         }
 
+        /// <summary>
+        /// Used for major breaks that will make it difficult for the program to keep running
+        /// </summary>
         public void Error(string source, string message)
         {
             if (LogLevel.Error <= LogLevel)
