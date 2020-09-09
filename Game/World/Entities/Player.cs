@@ -13,7 +13,7 @@ namespace ZuulTextBased.Game
             switch(state)
             {
                 case MoveEvent:
-                    Logger.Instance.Debug("Player", "Lets a go!");
+                    Logger.Instance.Debug(GetType(), "Lets a go!");
                     Move(((MoveEvent)state).Direction);
                     break;
             }

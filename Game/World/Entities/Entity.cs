@@ -40,7 +40,7 @@ namespace ZuulTextBased.Game.World.Entities
             }
             else
             {
-                Logger.Instance.Info("Entity", $"Entity {GetType().Name} walked towards a non-entrance and bumped their head");
+                Logger.Instance.Info(GetType(), $"Entity {GetType().Name} walked towards a non-entrance and bumped their head");
                 //TODO: new write event?
             }
         }

@@ -21,7 +21,7 @@ namespace ZuulTextBased.Game.World.Structures
         public override void Enter(Entity entity)
         {
             base.Enter(entity);
-            Logger.Instance.Info("Area", $"Entity {entity.GetType().Name} has entered room at {coordinates}");
+            Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered room at {coordinates}");
         }
     }
 }

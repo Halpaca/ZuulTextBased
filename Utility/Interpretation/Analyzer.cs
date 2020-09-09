@@ -24,18 +24,18 @@ namespace ZuulTextBased.Utility.Interpretation
         {
             if (Lexicon.Commands.ContainsKey(token))
             {
-                Logger.Instance.Info("Analyzer", $"Identified {token} as a type of command");
+                Logger.Instance.Info(GetType(), $"Identified {token} as a type of command");
                 Command command = (Command)Activator.CreateInstance(GetCommandTypeOf(token));
                 return new ArgData(command);
             }
             else if (Lexicon.Directions.ContainsKey(token))
             {
-                Logger.Instance.Info("Analyzer", $"Identified {token} as a type of direction");
+                Logger.Instance.Info(GetType(), $"Identified {token} as a type of direction");
                 return new ArgData(GetDirectionOf(token));
             }
             else
             {
-                Logger.Instance.Info("Analyzer", $"Could not define {token} as any type");
+                Logger.Instance.Info(GetType(), $"Could not define {token} as any type");
                 return new ArgData();
             }
         }
@@ -44,12 +44,12 @@ namespace ZuulTextBased.Utility.Interpretation
         {
             if (Lexicon.Commands.ContainsKey(token))
             {
-                Logger.Instance.Info("Analyzer", $"Command Type found with key {token}, returning {Lexicon.Commands[token]}");
+                Logger.Instance.Info(GetType(), $"Command Type found with key {token}, returning {Lexicon.Commands[token]}");
                 return Lexicon.Commands[token];
             }
             else
             {
-                Logger.Instance.Info("Analyzer", $"No command found with key: {token}, returning special case object");
+                Logger.Instance.Info(GetType(), $"No command found with key: {token}, returning special case object");
                 return typeof(CommandNotFound);
             }
         }
@@ -58,12 +58,12 @@ namespace ZuulTextBased.Utility.Interpretation
         {
             if (Lexicon.Directions.ContainsKey(token))
             {
-                Logger.Instance.Info("Analyzer", $"Direction found with key {token}, returning {Lexicon.Directions[token]}");
+                Logger.Instance.Info(GetType(), $"Direction found with key {token}, returning {Lexicon.Directions[token]}");
                 return Lexicon.Directions[token];
             }
             else
             {
-                Logger.Instance.Info("Analyzer", $"No direction found with key: {token}, returning special case object");
+                Logger.Instance.Info(GetType(), $"No direction found with key: {token}, returning special case object");
                 return Direction.None;
             }
         }

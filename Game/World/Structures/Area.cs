@@ -24,7 +24,7 @@ namespace ZuulTextBased.Game.World.Structures
             }
             else
             {
-                Logger.Instance.Warn("Area", $"Entrance already exists in direction {direction}");
+                Logger.Instance.Warn(GetType(), $"Entrance already exists in direction {direction}");
             }
         }
 
