@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ZuulTextBased.Game.Utility;
+using ZuulTextBased.Utility;
 using ZuulTextBased.Game.World.Entities;
 using ZuulTextBased.Utility.Logging;
 
@@ -8,17 +8,17 @@ namespace ZuulTextBased.Game.World.Structures
     internal abstract class Area
     {
         public Dictionary<Direction, Entrance> Exits { get; private set; }
-        public LinkedList<Entity> Denizens;
+        public LinkedList<Entity> Entities;
 
         public Area()
         {
             Exits = new Dictionary<Direction, Entrance>();
-            Denizens = new LinkedList<Entity>();
+            Entities = new LinkedList<Entity>();
         }
 
-        public void AddEntrance(Entrance entrance, Direction direction)
+        public void AddExit(Entrance entrance, Direction direction)
         {
-            if (!EntranceExists(direction))
+            if (!ExitExists(direction))
             {
                 Exits.Add(direction, entrance);
             }
@@ -28,32 +28,19 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
-        public void AddEntity(Entity entity)
+        public virtual void Enter(Entity entity)
         {
-            Denizens.AddLast(entity);
+            Entities.AddLast(entity);
             entity.CurrentArea = this;
         }
 
-        public void PassEntity(Direction direction, Entity entity)
+        public void Leave(Entity entity)
         {
-            if (EntranceExists(direction))
-            {
-                RemoveEntity(entity);
-                Exits[direction].EntityEntersFrom(this, entity);
-            }
-            else
-            {
-                Logger.Instance.Info("Area", $"Entity {entity} walked towards a non-entrance and bumped their head");
-            }
+            Entities.Remove(entity);
+            entity.CurrentArea = null; //TODO: Maybe use null object pattern? (NullArea)
         }
 
-        public void RemoveEntity(Entity entity)
-        {
-            Denizens.Remove(entity);
-            entity.CurrentArea = null;
-        }
-
-        private bool EntranceExists(Direction direction)
+        public bool ExitExists(Direction direction)
         {
             return Exits.ContainsKey(direction);
         }

@@ -26,19 +26,19 @@ namespace ZuulTextBased
             Player = new Player();
             CommandSubject.Subscibe(Player);
             Dungeon = new Dungeon();
+            Dungeon.AddToStartingRoom(Player);
             Parser = new Parser();
         }
 
+        //TODO: Describe the rooms in the game class
         internal void Run()
         {
             WriteOut("Welcome, type stuff below:");
             do
             {
                 Console.Write("> ");
-                string input = Console.ReadLine();
-                Parser.Analyze(input);
-                Command c = Parser.GetCommand();
-                c.Execute(Parser.Args, CommandSubject);
+                AwaitUserInput();
+                ExecuteNextCommand();
                 Dungeon.Step();
             }
             while (!_quit);
@@ -55,6 +55,18 @@ namespace ZuulTextBased
                     Quit();
                     break;
             }
+        }
+
+        private void AwaitUserInput()
+        {
+            string input = Console.ReadLine();
+            Parser.Analyze(input);
+        }
+
+        private void ExecuteNextCommand()
+        {
+            Command c = Parser.GetCommand();
+            c.Execute(Parser.Args, CommandSubject);
         }
 
         /// <summary>

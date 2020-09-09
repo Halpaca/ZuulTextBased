@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ZuulTextBased.Commands;
-using ZuulTextBased.Game.Utility;
+using ZuulTextBased.Utility;
 using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Utility.DataStructures

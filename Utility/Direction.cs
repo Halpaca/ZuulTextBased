@@ -1,4 +1,4 @@
-﻿namespace ZuulTextBased.Game.Utility
+﻿namespace ZuulTextBased.Utility
 {
     enum Direction
     {

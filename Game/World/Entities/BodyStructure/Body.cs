@@ -8,6 +8,11 @@ namespace ZuulTextBased.Game.World.Entities.BodyStructure
     {
         public LinkedList<Bodypart> Bodyparts { get; private set; }
 
+        public Body()
+        {
+            Bodyparts = new LinkedList<Bodypart>();
+        }
+
         public Body(Bodypart[] bodyparts)
         {
             Bodyparts = new LinkedList<Bodypart>(bodyparts);
@@ -19,6 +24,24 @@ namespace ZuulTextBased.Game.World.Entities.BodyStructure
             {
                 Bodyparts.Remove(bodypart); //TODO: garbage collection is automatic?
             }
+        }
+
+        //TODO: support more modes of transport (flying, slithering, swimming)
+        public bool CanMove()
+        {
+            foreach(Bodypart bodypart in Bodyparts)
+            {
+                if(bodypart.Type == BodypartType.Leg)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void CanWalk()
+        {
+
         }
     }
 }
