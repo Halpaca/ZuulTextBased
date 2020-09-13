@@ -6,30 +6,34 @@ namespace ZuulTextBased.Utility.DataStructures
 {
     public class TwoWayValuePair<T>
     {
-        private readonly KeyValuePair<T, T> _twoWayPair;
         public T Key { get; private set; }
-        public T Value { get; private set; }
+        public T Value { get; private set;  }
 
         public TwoWayValuePair(T first, T second)
         {
-            _twoWayPair = new KeyValuePair<T, T>(first, second);
             Key = first;
             Value = second;
         }
 
-        public T this[T value]
+        public void SetValues(T first, T second)
+        {
+            Key = first;
+            Value = second;
+        }
+
+        public T this[T valueIn]
         {
             get
             {
-                if (_twoWayPair.Key.Equals(value))
+                if (Key.Equals(valueIn))
                 {
-                    return _twoWayPair.Value;
+                    return Value;
                 }
-                if (_twoWayPair.Value.Equals(value))
+                if (Value.Equals(valueIn))
                 {
-                    return _twoWayPair.Key;
+                    return Key;
                 }
-                throw new ArgumentException(nameof(value));
+                throw new ArgumentException(nameof(valueIn));
             }
         }
     }

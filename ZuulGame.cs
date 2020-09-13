@@ -10,7 +10,7 @@ using ZuulTextBased.Utility.Interpretation;
 
 namespace ZuulTextBased
 {
-    internal class ZuulGame : IObserver
+    internal class ZuulGame : ICommandObserver
     {
         private bool _quit = false;
         public WriteMode WriteTarget { get; set; }
@@ -26,8 +26,8 @@ namespace ZuulTextBased
             Player = new Player();
             CommandSubject.Subscibe(Player);
             Dungeon = new Dungeon();
-            Dungeon.AddToStartingArea(Player);
-            Dungeon.GenerateRooms(2);
+            Dungeon.AddToStartingFloor(Player);
+            Dungeon.GenerateActiveFloor(10);
             Parser = new Parser();
         }
 
@@ -40,7 +40,7 @@ namespace ZuulTextBased
                 Console.Write("> ");
                 AwaitUserInput();
                 ExecuteNextCommand();
-                Dungeon.Step();
+                Dungeon.Update();
             }
             while (!_quit);
         }

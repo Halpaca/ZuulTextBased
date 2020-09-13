@@ -4,12 +4,19 @@ using System.Text;
 
 namespace ZuulTextBased.Game.World.Structures
 {
-    internal class Door : Entrance
+    internal class Door : TwoWayEntrance
     {
-        public Door(Area source, Area destination) : base(source, destination)
+        private Lock _lock;
+
+        public Door(Lock doorLock = null)
         {
+            _lock = doorLock;
         }
 
-        //can be locked
+        public override bool IsPassable()
+        {
+            //TODO: make lockable, collapsable, broken, etc.
+            return true;
+        }
     }
 }

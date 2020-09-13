@@ -8,35 +8,47 @@ namespace ZuulTextBased.Game.World.Structures
 {
     internal abstract class Area
     {
-        public Dictionary<Direction, Entrance> Exits { get; private set; }
+        public Dictionary<Direction, TwoWayEntrance> Exits { get; private set; }
         public LinkedList<Entity> Entities { get; private set; } //Linkedlist because mid entries can leave, linking the other nodes
 
         public Area()
         {
-            Exits = new Dictionary<Direction, Entrance>();
+            Exits = new Dictionary<Direction, TwoWayEntrance>();
             Entities = new LinkedList<Entity>();
         }
 
-        public void AddTwoWayExit(Direction direction, Area area, Type EntranceType)
+        public void Update()
         {
-            if(!ExitExists(direction) && !area.ExitExists(Directions.Inverse(direction)))
+            foreach(Entity entity in Entities)
             {
-                AddOneWayExit(direction, area, EntranceType);
-                area.AddOneWayExit(Directions.Inverse(direction), this, EntranceType);
-            }
+                entity.Update();
+            }    
         }
 
-        public void AddOneWayExit(Direction direction, Area area, Type EntranceType)
+        public void LinkAreas(Direction direction, Area destination, TwoWayEntrance entrance)
         {
-            //TODO: Check if type is Entrance
-            if (!ExitExists(direction))
+            Direction inverseDirection = Directions.Inverse(direction);
+            if (!ExitExists(direction) && !destination.ExitExists(inverseDirection))
             {
-                Entrance entrance = (Entrance)Activator.CreateInstance(EntranceType, this, area);
+                entrance.SetAreas(this, destination);
                 Exits.Add(direction, entrance);
+                destination.Exits.Add(inverseDirection, entrance);
             }
             else
             {
-                Logger.Instance.Warn(GetType(), $"Entrance already exists in direction {direction}");
+                Logger.Instance.Warn(GetType(), $"Entrance already exists in either {GetType().Name}.{direction} or {destination.GetType().Name}.{inverseDirection}");
+            }
+        }
+
+        public void ToNextRoom(Entity entity, Direction direction)
+        {
+            if (ExitExists(direction))
+            {
+                Exits[direction].PassTrough(entity, this);
+            }
+            else
+            {
+                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} walked towards a non-entrance and bumped their head");
             }
         }
 
@@ -52,7 +64,7 @@ namespace ZuulTextBased.Game.World.Structures
         {
             Entities.Remove(entity);
             Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has left {ToString()}");
-            Limbo.Instance.Enter(entity); //Set transistional space in case any error occurs, prevents null
+            Limbo.Instance.Enter(entity, true); //Set transistional space in case any error occurs, prevents null
         }
 
         public bool ExitExists(Direction direction)

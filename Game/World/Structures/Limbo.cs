@@ -13,19 +13,33 @@ namespace ZuulTextBased.Game.World.Structures
     internal class Limbo : Area
     {
         public static Limbo Instance { get; } = new Limbo();
-        private bool _intentional = false; //TODO: If player unintentionally entered limbo (dueto a bug), spawn one way portal to starting room
+
+        public void Enter(Entity entity, bool intentional)
+        {
+            if(intentional)
+            {
+                Entities.AddLast(entity);
+                entity.CurrentArea = this;
+                Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has entered limbo (Intentional)");
+            }
+            else
+            {
+                Enter(entity);
+            }
+        }
 
         public override void Enter(Entity entity)
         {
+            Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} has entered limbo unintentionally, generating portal");
             Entities.AddLast(entity);
             entity.CurrentArea = this;
-            Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has entered limbo, awaiting leave...");
+            throw new NotImplementedException(); //TODO: add error handling by adding a portal to the starting room of the current floor
         }
 
         public override void Leave(Entity entity)
         {
             Entities.Remove(entity);
-            Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has left limbo as intended");
+            Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has left limbo");
         }
     }
 }

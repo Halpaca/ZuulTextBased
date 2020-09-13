@@ -19,18 +19,13 @@ namespace ZuulTextBased.Game.World.Entities
             CurrentArea = new Limbo();
         }
 
+        public abstract void Update();
+
         public virtual void Move(Direction direction)
         {
             if(true) //TODO: use Body.CanMove instead
             {
-                if(CurrentArea.ExitExists(direction))
-                {
-                    CurrentArea.Exits[direction].PassTrough(this);
-                }
-                else
-                {
-                    Logger.Instance.Info(GetType(), $"Entity {GetType().Name} walked towards a non-entrance and bumped their head");
-                }
+                CurrentArea.ToNextRoom(this, direction);
             }
             else
             {

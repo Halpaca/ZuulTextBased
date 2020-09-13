@@ -22,7 +22,7 @@ namespace ZuulTextBased.Game.World.Entities.BodyStructure
         {
             if(Bodyparts.Contains(bodypart))
             {
-                Bodyparts.Remove(bodypart); //TODO: garbage collection is automatic?
+                Bodyparts.Remove(bodypart);
             }
         }
 

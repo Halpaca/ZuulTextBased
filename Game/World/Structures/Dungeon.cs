@@ -8,99 +8,47 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game.World.Structures
 {
+    /// <summary>
+    /// Provides a basic dungeon structure for entities to traverse in
+    /// Default generates with a starting floor at Index 0
+    /// </summary>
     internal class Dungeon
     {
-        private Dictionary<Point, Area> _floor;
-        private Random _random;
+        public List<Floor> Floors { get; private set; }
+        private int _activeFloor;
 
         public Dungeon()
         {
-            _random = new Random();
-            _floor = new Dictionary<Point, Area>();
-            Point startingCoordinates = new Point(0, 0);
-            _floor.Add(startingCoordinates, new Room(startingCoordinates));
+            Floors = new List<Floor>();
+            CreateFloor(0);
+            _activeFloor = 0;
         }
 
-        public void AddToStartingArea(Player player)
+        public void AddToStartingFloor(Player player)
         {
-            AreaAt(0, 0).Enter(player);
+            Floors[0].EnterPlayer(player);
         }
 
-        public void GenerateRooms(int Amount)
+        public void CreateFloor(int floorNumber)
         {
-            while(Amount > 0)
+            if(Floors.ElementAtOrDefault(floorNumber) == null)
             {
-                Point source = RandomExistingCoordinate();
-                Direction randomDirection = Directions.RandomValid();
-                Point destination = Points.Add(source, Directions.ToAdditivePoint(randomDirection));
-                if(GenerateRoom(destination))
-                {
-                    AreaAt(source).AddTwoWayExit(randomDirection, AreaAt(destination), typeof(Door));
-                    Amount--;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Tries to generate a room at a specified coordinate
-        /// </summary>
-        /// <returns>Returns true if the room was generated succesfully</returns>
-        private bool GenerateRoom(Point coordinate)
-        {
-            if(!AreaExists(coordinate))
-            {
-                _floor.Add(coordinate, new Room(coordinate));
-                Logger.Instance.Info(GetType(), $"Generated room at {coordinate.X}.{coordinate.Y}");
-                return true;
+                Floors.Add(new Floor());
             }
             else
             {
-                Logger.Instance.Info(GetType(), $"Failed to generate room at {coordinate.X}.{coordinate.Y}, area already exists");
-                return false;
+                Logger.Instance.Warn(GetType(), $"Floor already exists at index {floorNumber}");
             }
         }
 
-        private void LinkAreas(Area source, Direction direction, Entrance entrance, Area destination)
+        public void GenerateActiveFloor(int areaCount)
         {
-            source.AddTwoWayExit(direction, destination, entrance.GetType());
+            Floors[_activeFloor].GenerateRooms(areaCount);
         }
 
-        private Point RandomExistingCoordinate()
+        public void Update()
         {
-            return _floor.Keys.ElementAt(_random.Next(0, _floor.Count));
-        }
-
-        public Area AreaAt(int X, int Y)
-        {
-            return AreaAt(new Point(X, Y));
-        }
-
-        public Area AreaAt(Point coordinate)
-        {
-            if (AreaExists(coordinate))
-            {
-                return _floor[coordinate]; //stucts compare value types instead of object
-            }
-            else
-            {
-                Logger.Instance.Warn(GetType(), $"No room found at Coordinates {coordinate.X}.{coordinate.Y}, returning Limbo as special case");
-                return Limbo.Instance;
-            }
-        }
-
-        public bool AreaExists(int X, int Y)
-        {
-            return AreaExists(new Point(X, Y));
-        }
-
-        public bool AreaExists(Point coordinate)
-        {
-            return _floor.ContainsKey(coordinate);
-        }
-
-        public void Step()
-        {
-
+            Floors[_activeFloor].Update();
         }
     }
 }

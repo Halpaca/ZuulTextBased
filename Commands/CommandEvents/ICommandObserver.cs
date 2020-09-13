@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using ZuulTextBased.Commands.CommandEvents;
 
-namespace ZuulTextBased.Utility
+namespace ZuulTextBased.Commands.CommandEvents
 {
-    interface IObserver
+    interface ICommandObserver
     {
         public abstract void OnNotify(CommandEvent state);
     }

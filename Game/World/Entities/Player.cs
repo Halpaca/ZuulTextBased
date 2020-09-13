@@ -6,8 +6,13 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game
 {
-    internal class Player : Entity, IObserver
+    internal class Player : Entity, ICommandObserver
     {
+        public Player()
+        {
+
+        }
+
         public void OnNotify(CommandEvent state)
         {
             switch(state)
@@ -17,6 +22,11 @@ namespace ZuulTextBased.Game
                     Move(((MoveEvent)state).Direction);
                     break;
             }
+        }
+
+        public override void Update()
+        {
+            //Empty update cycle since player is not computer controlled, can be used for confusion later maybe
         }
 
         //TODO: new write event?

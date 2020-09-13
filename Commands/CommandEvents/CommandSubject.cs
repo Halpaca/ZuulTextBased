@@ -7,20 +7,20 @@ namespace ZuulTextBased.Commands.CommandEvents
 {
     class CommandSubject
     {
-        public List<IObserver> Observers { get; private set; }
+        public List<ICommandObserver> Observers { get; private set; }
         public CommandEvent State { get; private set; }
 
         public CommandSubject()
         {
-            Observers = new List<IObserver>();
+            Observers = new List<ICommandObserver>();
         }
 
-        public void Subscibe(IObserver observer)
+        public void Subscibe(ICommandObserver observer)
         {
             Observers.Add(observer);
         }
 
-        public void Unsubscribe(IObserver observer)
+        public void Unsubscribe(ICommandObserver observer)
         {
             if(Observers.Contains(observer))
             {
@@ -35,7 +35,7 @@ namespace ZuulTextBased.Commands.CommandEvents
 
         private void Notify()
         {
-            foreach(IObserver observer in Observers)
+            foreach(ICommandObserver observer in Observers)
             {
                 observer.OnNotify(State);
             }
