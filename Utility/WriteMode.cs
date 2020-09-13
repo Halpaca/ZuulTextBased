@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZuulTextBased.Game.World.Structures
+namespace ZuulTextBased.Utility
 {
-    internal class NullArea : Area
+    enum WriteMode
     {
+        Console
     }
 }

@@ -43,8 +43,7 @@ namespace ZuulTextBased.Utility.DataStructures
             }
             else
             {
-                Logger.Instance.Warn(GetType(), $"The container of this data object is not a type of command, but {Container.GetType().Name} instead." +
-                                     "Returning CommandNotFound");
+                Logger.Instance.Warn(GetType(), $"This data's container is not a type of command, but {Container.GetType().Name}. Returning special case object");
                 return new CommandNotFound();
             }
         }
@@ -57,8 +56,7 @@ namespace ZuulTextBased.Utility.DataStructures
             }
             else
             {
-                Logger.Instance.Warn(GetType(), $"The container of this data object is not a type of direction, but {Container.GetType().Name} instead" +
-                                     "Returning Direction.None");
+                Logger.Instance.Warn(GetType(), $"This data's container is not a type of direction, but {Container.GetType().Name}. Returning special case object");
                 return Direction.None;
             }
         }

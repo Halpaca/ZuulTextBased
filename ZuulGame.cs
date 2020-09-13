@@ -13,7 +13,7 @@ namespace ZuulTextBased
     internal class ZuulGame : IObserver
     {
         private bool _quit = false;
-        public WriteTarget WriteTarget { get; set; }
+        public WriteMode WriteTarget { get; set; }
         public Dungeon Dungeon { get; private set; }
         public Player Player { get; private set; }
         public Parser Parser { get; private set; }
@@ -26,7 +26,8 @@ namespace ZuulTextBased
             Player = new Player();
             CommandSubject.Subscibe(Player);
             Dungeon = new Dungeon();
-            Dungeon.AddToStartingRoom(Player);
+            Dungeon.AddToStartingArea(Player);
+            Dungeon.GenerateRooms(2);
             Parser = new Parser();
         }
 
@@ -78,7 +79,7 @@ namespace ZuulTextBased
         {
             switch(WriteTarget)
             {
-                case WriteTarget.Console:
+                case WriteMode.Console:
                 Console.WriteLine(message);
                     break;
             }
@@ -94,7 +95,7 @@ namespace ZuulTextBased
             else
             {
                 WriteOut("OK! Returning...");
-                //TODO: write last world step
+                //TODO: write last world step as reminder
             }
         }
 

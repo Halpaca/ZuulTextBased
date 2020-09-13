@@ -11,8 +11,6 @@ namespace ZuulTextBased.Utility.Interpretation
     internal class Parser
     {
         public Analyzer Analyzer { get; private set; }
-
-        //Todo: make args list of key-value pairs
         public KeyValuePair<string, ArgData>[] Args { get; private set; }
 
         public Parser()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -12,8 +13,9 @@ namespace ZuulTextBased.Utility
     {
         public readonly static int Count = Enum.GetValues(typeof(Direction)).Length - 1; //-1 for Direction.None
         public readonly static Direction[] All = GetAllDirections();
+        private readonly static Random _random = new Random();
 
-        public static Direction Invert(Direction direction)
+        public static Direction Inverse(Direction direction)
         {
             switch (direction)
             {
@@ -28,6 +30,32 @@ namespace ZuulTextBased.Utility
                 case Direction.None:
                 default:
                     return Direction.None;
+            }
+        }
+
+        /// <summary>
+        /// Returns a random direction, excluding Direction.None
+        /// </summary>
+        public static Direction RandomValid()
+        {
+            return All[_random.Next(0, All.Length)];
+        }
+
+        public static Point ToAdditivePoint(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.North:
+                    return new Point(0, 1);
+                case Direction.East:
+                    return new Point(1, 0);
+                case Direction.South:
+                    return new Point(0, -1);
+                case Direction.West:
+                    return new Point(-1, 0);
+                case Direction.None:
+                default:
+                    return new Point(0, 0);
             }
         }
 

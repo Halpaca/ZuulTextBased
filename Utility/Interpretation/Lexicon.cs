@@ -30,6 +30,7 @@ namespace ZuulTextBased.Utility.Interpretation
             Commands.Add("exit", typeof(QuitCommand));
             Commands.Add("quit", typeof(QuitCommand));
             Commands.Add("move", typeof(MoveCommand));
+            Commands.Add("go", typeof(MoveCommand));
         }
 
         private void MapDirections()

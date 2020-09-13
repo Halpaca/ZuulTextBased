@@ -8,17 +8,20 @@ namespace ZuulTextBased.Game.World.Structures
 {
     internal abstract class Entrance
     {
-        private TwoWayValuePair<Area> Destinations { get; set; }
+        public Area Source { get; private set; }
+        public Area Destination { get; private set; }
+        //private TwoWayValuePair<Area> Destinations { get; set; }
 
         public Entrance(Area source, Area destination)
         {
-            Destinations = new TwoWayValuePair<Area>(source, destination);
+            Source = source;
+            Destination = destination;
         }
 
-        public virtual void PassTrough(Area source, Entity entity)
+        public virtual void PassTrough(Entity entity)
         {
-            source.Leave(entity);
-            Destinations[source].Enter(entity);
+            Source.Leave(entity);
+            Destination.Enter(entity);
         }
     }
 }

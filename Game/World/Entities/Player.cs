@@ -13,10 +13,12 @@ namespace ZuulTextBased.Game
             switch(state)
             {
                 case MoveEvent:
-                    Logger.Instance.Debug(GetType(), "Lets a go!");
+                    Logger.Instance.Info(GetType(), $"Entity {GetType().Name} moving in direction {((MoveEvent)state).Direction}");
                     Move(((MoveEvent)state).Direction);
                     break;
             }
         }
+
+        //TODO: new write event?
     }
 }
