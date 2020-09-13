@@ -41,7 +41,7 @@ namespace ZuulTextBased.Utility
             return All[_random.Next(0, All.Length)];
         }
 
-        public static Point ToAdditivePoint(Direction direction)
+        public static Point ToPoint(Direction direction)
         {
             switch (direction)
             {

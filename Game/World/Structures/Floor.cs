@@ -49,20 +49,11 @@ namespace ZuulTextBased.Game.World.Structures
         /// Tries to generate a room at the specified coordinates
         /// </summary>
         /// <returns>Returns true if the room was generated succesfully</returns>
-        public Area CreateRoom(Point coordinates)
+        public void CreateRoom(Point coordinates)
         {
-            if (!AreaExists(coordinates))
-            {
-                Room newRoom = new Room(coordinates);
-                Areas.Add(coordinates, newRoom);
-                Logger.Instance.Info(GetType(), $"Generated room at {coordinates.X}.{coordinates.Y}");
-                return newRoom;
-            }
-            else
-            {
-                Logger.Instance.Info(GetType(), $"Failed to generate room at {coordinates.X}.{coordinates.Y}, area already exists");
-                return Limbo.Instance;
-            }
+            Room newRoom = new Room(coordinates);
+            Areas.Add(coordinates, newRoom);
+            Logger.Instance.Info(GetType(), $"Generated room at {coordinates.X}.{coordinates.Y}");
         }
 
         public void LinkAreas(Point source, Direction direction, Point destination)
