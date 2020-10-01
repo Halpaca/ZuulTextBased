@@ -23,7 +23,7 @@ namespace ZuulTextBased.Utility.Interpretation
         }
 
         /// <summary>
-        /// Temporary function for filling the lexicon, to be migrated to an IO stream later.
+        /// Temporary function for filling the lexicon, to be migrated to an IO stream later
         /// </summary>
         private void MapCommands()
         {

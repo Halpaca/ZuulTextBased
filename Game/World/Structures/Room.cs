@@ -12,6 +12,8 @@ namespace ZuulTextBased.Game.World.Structures
 {
     internal class Room : Area
     {
+        //TODO: add items
+
         public Point Coordinates { get; private set; }
 
         public Room(Point coordinates)

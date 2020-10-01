@@ -73,7 +73,7 @@ namespace ZuulTextBased.Utility.Generation
         }
 
         /// <summary>
-        /// Checks if the number of valid directions left of the source coordinate is 1 or less.
+        /// Checks if the number of valid directions left of the source coordinate is 1 or less
         /// If so, the coordinate has (or is going to have) no more valid directions left, and is moved to full room coordinates
         /// </summary>
         private void CheckNumOfDirectionsLeft(Point source, int NumValidDirections)

@@ -4,6 +4,7 @@ using System.Text;
 
 namespace ZuulTextBased.Utility
 {
+    //TODO: add to narrator class
     internal static class Spelling
     {
         public static string AorAn(string nextword)

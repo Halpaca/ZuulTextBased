@@ -8,6 +8,8 @@ namespace ZuulTextBased.Game
 {
     internal class Player : Entity, ICommandObserver
     {
+        //Todo: add senses
+
         public Player()
         {
 

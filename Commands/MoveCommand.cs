@@ -8,6 +8,7 @@ namespace ZuulTextBased.Commands
 {
     internal class MoveCommand : Command
     {
+        //TODO: exept up/down from here, not move event
         public override void Execute(KeyValuePair<string, ArgData>[] args, CommandSubject subject)
         {
             if(args.Length > 1)
