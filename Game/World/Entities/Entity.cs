@@ -23,13 +23,16 @@ namespace ZuulTextBased.Game.World.Entities
 
         public virtual void Move(Direction direction)
         {
-            if(true) //TODO: use Body.CanMove instead
+            if(direction != Direction.None)
             {
-                CurrentArea.ToNextRoom(this, direction);
-            }
-            else
-            {
-                //TODO: Write reason why you can't move
+                if (true) //TODO: use Body.CanMove instead
+                {
+                    CurrentArea.ToNextRoom(this, direction);
+                }
+                else
+                {
+                    //TODO: Write reason why you can't move
+                }
             }
         }
     }

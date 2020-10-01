@@ -31,5 +31,10 @@ namespace ZuulTextBased.Game.World.Structures
         }
 
         public abstract bool IsPassable();
+
+        ~TwoWayEntrance()
+        {
+            Destinations.SetValues(null, null);
+        }
     }
 }

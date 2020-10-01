@@ -24,7 +24,7 @@ namespace ZuulTextBased.Game.World.Structures
             _random = new Random();
             Areas = new Dictionary<Point, Area>();
             CreateRoom(new Point(0, 0));
-            GenerationStrategy = new BlobGenerationStrategy(this);
+            GenerationStrategy = new BlobStrategy(this);
         }
 
         public void Update()
@@ -77,6 +77,57 @@ namespace ZuulTextBased.Game.World.Structures
         public bool AreaExists(Point coordinates)
         {
             return Areas.ContainsKey(coordinates);
+        }
+
+        public string AsciiMap()
+        {
+            Rectangle m = GetMapSize();
+            string asciiMap = "";
+            //Rectangle is upside down, go from bottom to top instead
+            for(int i = m.Top; i <= m.Bottom; i++)
+            {
+                for(int j = m.Left; j <= m.Right; j++)
+                {
+                    if(AreaExists(new Point(j, i)))
+                    {
+                        asciiMap += "# ";
+                    }
+                    else
+                    {
+                        asciiMap += ". ";
+                    }
+                }
+                asciiMap += "\n";
+            }
+            return asciiMap;
+        }
+
+        private Rectangle GetMapSize()
+        {
+            int offsetX = 0;
+            int offsetY = 0;
+            int width = 0;
+            int height = 0;
+            foreach(Point coordinate in Areas.Keys)
+            {
+                if(coordinate.X > 0 && coordinate.X > width)
+                {
+                    width = coordinate.X;
+                }
+                if(coordinate.X < 0 && coordinate.X < offsetX)
+                {
+                    offsetX = coordinate.X;
+                }
+                if (coordinate.Y > 0 && coordinate.Y > height)
+                {
+                    height = coordinate.Y;
+                }
+                if (coordinate.Y < 0 && coordinate.Y < offsetY)
+                {
+                    offsetY = coordinate.Y;
+                }
+            }
+            return new Rectangle(offsetX, offsetY, width + Math.Abs(offsetX), height + Math.Abs(offsetY));
         }
     }
 }

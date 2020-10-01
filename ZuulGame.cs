@@ -26,7 +26,7 @@ namespace ZuulTextBased
             Player = new Player();
             CommandSubject.Subscibe(Player);
             Dungeon = new Dungeon();
-            Dungeon.GenerateActiveFloor(10);
+            Dungeon.GenerateActiveFloor(20);
             Dungeon.AddToStartingFloor(Player);
             Parser = new Parser();
         }

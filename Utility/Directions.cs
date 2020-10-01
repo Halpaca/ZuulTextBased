@@ -46,11 +46,11 @@ namespace ZuulTextBased.Utility
             switch (direction)
             {
                 case Direction.North:
-                    return new Point(0, 1);
+                    return new Point(0, -1);
                 case Direction.East:
                     return new Point(1, 0);
                 case Direction.South:
-                    return new Point(0, -1);
+                    return new Point(0, 1);
                 case Direction.West:
                     return new Point(-1, 0);
                 case Direction.None:
