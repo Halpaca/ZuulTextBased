@@ -23,11 +23,14 @@ namespace ZuulTextBased
         {
             CommandSubject = new CommandSubject();
             CommandSubject.Subscibe(this);
+
             Player = new Player();
             CommandSubject.Subscibe(Player);
+
             Dungeon = new Dungeon();
             Dungeon.GenerateActiveFloor(20);
             Dungeon.AddToStartingFloor(Player);
+
             Parser = new Parser();
         }
 
@@ -61,7 +64,7 @@ namespace ZuulTextBased
         private void AwaitUserInput()
         {
             string input = Console.ReadLine();
-            Parser.Analyze(input);
+            Parser.SetArguments(input);
         }
 
         private void ExecuteNextCommand()

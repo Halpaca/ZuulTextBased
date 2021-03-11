@@ -14,7 +14,7 @@ namespace ZuulTextBased.Game.World.Structures
     {
         public static Limbo Instance { get; } = new Limbo();
 
-        public void Enter(Entity entity, bool intentional)
+        public void Enter(Agent entity, bool intentional)
         {
             if(intentional)
             {
@@ -28,7 +28,7 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
-        public override void Enter(Entity entity)
+        public override void Enter(Agent entity)
         {
             Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} has entered limbo unintentionally, generating portal");
             Entities.AddLast(entity);
@@ -36,7 +36,7 @@ namespace ZuulTextBased.Game.World.Structures
             throw new NotImplementedException(); //TODO: add error handling by adding a portal to the starting room of the current floor
         }
 
-        public override void Leave(Entity entity)
+        public override void Leave(Agent entity)
         {
             Entities.Remove(entity);
             Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has left limbo");

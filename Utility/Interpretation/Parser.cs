@@ -23,7 +23,7 @@ namespace ZuulTextBased.Utility.Interpretation
             return Args[0].Value.GetCommand();
         }
 
-        public KeyValuePair<string, ArgData>[] Analyze(string source)
+        public void SetArguments(string source)
         {
             string[] tokens = source.Split(' ');
             Args = new KeyValuePair<string, ArgData>[tokens.Length];
@@ -31,7 +31,6 @@ namespace ZuulTextBased.Utility.Interpretation
             {
                 Args[i] = AnalyzeToken(tokens[i]);
             }
-            return Args;
         }
 
         private KeyValuePair<string, ArgData> AnalyzeToken(string token)

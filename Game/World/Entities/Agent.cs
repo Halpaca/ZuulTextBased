@@ -8,12 +8,12 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game.World.Entities
 {
-    internal abstract class Entity
+    internal abstract class Agent
     {
         public Body Body { get; private set; }
         public Area CurrentArea { get; set; }
 
-        public Entity()
+        public Agent()
         {
             Body = new Body();
             CurrentArea = new Limbo();

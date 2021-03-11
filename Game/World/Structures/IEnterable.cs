@@ -11,6 +11,6 @@ namespace ZuulTextBased.Game.World.Structures
     /// </summary>
     interface IEnterable
     {
-        public abstract void Enter(Entity entity);
+        public abstract void Enter(Agent entity);
     }
 }

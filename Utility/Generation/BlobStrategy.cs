@@ -10,8 +10,8 @@ namespace ZuulTextBased.Utility.Generation
 {
     internal class BlobStrategy : FloorGenerationStrategy
     {
-        public List<Point> RoomCoordinates { get; } //Represents generated room coordinates
-        public List<Point> FullCoordinates { get; } //Represents room coordinates with no more valid directions to generate to
+        public List<Point> RoomCoordinates { get; private set; } //Represents generated room coordinates
+        public List<Point> FullCoordinates { get; private set; } //Represents room coordinates with no more valid directions to generate to
 
         public BlobStrategy(Floor floor) : base(floor)
         {

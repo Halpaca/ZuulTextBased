@@ -9,17 +9,16 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Utility.Generation
 {
+    //TODO: Prototype is not working properly, needs rewrite
     internal class BranchStrategy : FloorGenerationStrategy
     {
         public Dictionary<Queue<Point>, Direction> ActiveBranches { get; }
         public List<Point> UsedCoordinates { get; }
-        private int _branchEventCounter;
 
         public BranchStrategy(Floor floor) : base(floor)
         {
             ActiveBranches = new Dictionary<Queue<Point>, Direction>();
             UsedCoordinates = new List<Point>();
-            _branchEventCounter = 1;
         }
 
         public override void GenerateRooms(int amount)

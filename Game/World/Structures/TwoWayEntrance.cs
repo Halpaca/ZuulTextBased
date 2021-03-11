@@ -21,7 +21,7 @@ namespace ZuulTextBased.Game.World.Structures
             Destinations.SetValues(area1, area2);
         }
 
-        public virtual void PassTrough(Entity entity, Area source)
+        public virtual void PassTrough(Agent entity, Area source)
         {
             if(IsPassable())
             {
