@@ -9,7 +9,7 @@ namespace ZuulTextBased.Utility.Logging
     {
         public static Logger Instance { get; } = new Logger();
         public LogLevel LogLevel { get; set; }
-        public WriteMode WriteTarget { get; set; }
+        public WriteMode WriteMode { get; set; }
 
         /// <summary>
         /// Used for major breaks that will make it difficult for the program to still keep running
@@ -57,7 +57,7 @@ namespace ZuulTextBased.Utility.Logging
 
         public void Write(LogLevel level, Type caller, string message)
         {
-            switch(WriteTarget)
+            switch(WriteMode)
             {
                 case WriteMode.Console:
                     Console.WriteLine($"{DateTime.Now:yyyy-mm-dd hh:mm:ss} [{caller.Name}] [{level}]: {message}");

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZuulTextBased.Utility
+namespace ZuulTextBased.Utility.Logging
 {
     enum WriteMode
     {
-        Console
+        Console,
+        GameWindow
     }
 }

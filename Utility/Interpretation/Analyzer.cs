@@ -33,7 +33,7 @@ namespace ZuulTextBased.Utility.Interpretation
             }
             else
             {
-                Logger.Instance.Warn(GetType(), $"Could not define key {token} as any type, returning a blank data object");
+                Logger.Instance.Warn(GetType(), $"Could not define key {token} as any type, returning blank data");
                 return new ArgData();
             }
         }

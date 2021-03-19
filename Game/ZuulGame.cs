@@ -2,8 +2,8 @@
 using ZuulTextBased.Commands;
 using ZuulTextBased.Commands.CommandEvents;
 using ZuulTextBased.Game.World.Structures;
-using ZuulTextBased.Utility;
 using ZuulTextBased.Utility.Interpretation;
+using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game
 {
