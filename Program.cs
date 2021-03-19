@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using ZuulTextBased.Utility;
+using ZuulTextBased.Game;
 using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased

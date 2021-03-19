@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Net.Http.Headers;
 using ZuulTextBased.Commands;
 using ZuulTextBased.Commands.CommandEvents;
-using ZuulTextBased.Game;
-using ZuulTextBased.Game.World;
 using ZuulTextBased.Game.World.Structures;
 using ZuulTextBased.Utility;
 using ZuulTextBased.Utility.Interpretation;
 
-namespace ZuulTextBased
+namespace ZuulTextBased.Game
 {
     internal class ZuulGame : ICommandObserver
     {

@@ -15,40 +15,7 @@ namespace ZuulTextBased.Utility.Logging
         {
             if(level <= LogLevel)
             {
-                Write(level, caller.Name, message);
-            }
-        }
-
-        /// <summary>
-        /// Used Sparingly for debugging purposes and stubs
-        /// </summary>
-        public void Debug(Type caller, string message)
-        {
-            if(LogLevel.Debug <= LogLevel)
-            {
-                Write(LogLevel.Debug, caller.Name, message);
-            }
-        }
-
-        /// <summary>
-        /// Used for notifying the user for furtherings in the program
-        /// </summary>
-        public void Info(Type caller, string message)
-        {
-            if (LogLevel.Info <= LogLevel)
-            {
-                Write(LogLevel.Info, caller.Name, message);
-            }
-        }
-
-        /// <summary>
-        /// Used to warn the user for mild inconviniences, where the program can still run
-        /// </summary>
-        public void Warn(Type caller, string message)
-        {
-            if (LogLevel.Warn <= LogLevel)
-            {
-                Write(LogLevel.Warn, caller.Name, message);
+                Write(level, caller, message);
             }
         }
 
@@ -59,16 +26,49 @@ namespace ZuulTextBased.Utility.Logging
         {
             if (LogLevel.Error <= LogLevel)
             {
-                Write(LogLevel.Error, caller.Name, message);
+                Write(LogLevel.Error, caller, message);
             }
         }
 
-        public void Write(LogLevel level, string callername, string message)
+        /// <summary>
+        /// Used to warn the user for mild inconviniences, where the program can still run
+        /// </summary>
+        public void Warn(Type caller, string message)
+        {
+            if (LogLevel.Warning <= LogLevel)
+            {
+                Write(LogLevel.Warning, caller, message);
+            }
+        }
+
+        /// <summary>
+        /// Used for notifying the user for furtherings in the program
+        /// </summary>
+        public void Info(Type caller, string message)
+        {
+            if (LogLevel.Info <= LogLevel)
+            {
+                Write(LogLevel.Info, caller, message);
+            }
+        }
+
+        /// <summary>
+        /// Used Sparingly for debugging purposes and stubs
+        /// </summary>
+        public void Debug(Type caller, string message)
+        {
+            if(LogLevel.Debug <= LogLevel)
+            {
+                Write(LogLevel.Debug, caller, message);
+            }
+        }
+
+        public void Write(LogLevel level, Type caller, string message)
         {
             switch(WriteTarget)
             {
                 case WriteMode.Console:
-                    Console.WriteLine($"{DateTime.Now:yyyy-mm-dd hh:mm:ss} [{callername}] [{level}]: {message}");
+                    Console.WriteLine($"{DateTime.Now:yyyy-mm-dd hh:mm:ss} [{caller.Name}] [{level}]: {message}");
                     break;
             }
         }

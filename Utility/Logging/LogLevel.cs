@@ -4,7 +4,7 @@
     {
         Off,
         Error,
-        Warn,
+        Warning,
         Info,
         Debug
     }

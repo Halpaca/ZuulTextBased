@@ -83,7 +83,7 @@ namespace ZuulTextBased.Game.World.Structures
         {
             Rectangle m = GetMapSize();
             string asciiMap = "";
-            //Rectangle is upside down, go from bottom to top instead
+            //TODO: rectangle is upside down, go from bottom to top instead
             for(int i = m.Top; i <= m.Bottom; i++)
             {
                 for(int j = m.Left; j <= m.Right; j++)
