@@ -7,14 +7,18 @@ using ZuulTextBased.Utility.Logging;
 namespace ZuulTextBased.Game.World.Structures
 {
     /// <summary>
-    /// Singleton area that as a transitional space between areas, staying in limbo is not intentional (yet)
-    /// Maybe to be changed to plane of existence later
+    /// Singleton area that as a transitional space between areas.
+    /// Used as a failsafe when an entity tries to move between rooms
+    /// and as a special case object when something goes wrong with trying to enter an area
     /// </summary>
     internal class Limbo : Area
     {
         public static Limbo Instance { get; } = new Limbo();
 
-        public void Enter(Agent entity, bool intentional)
+        /// <summary>
+        /// Overloaded function. Add true to the bool to let the program know the entity is transistioning between areas
+        /// </summary>
+        public void Enter(Entity entity, bool intentional)
         {
             if(intentional)
             {
@@ -28,15 +32,15 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
-        public override void Enter(Agent entity)
+        public override void Enter(Entity entity)
         {
-            Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} has entered limbo unintentionally, generating portal");
+            Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} has entered limbo unintentionally");
             Entities.AddLast(entity);
             entity.CurrentArea = this;
-            throw new NotImplementedException(); //TODO: add error handling by adding a portal to the starting room of the current floor
+            //TODO: add error handling for the player by adding a portal to the starting room of the current floor
         }
 
-        public override void Leave(Agent entity)
+        public override void Leave(Entity entity)
         {
             Entities.Remove(entity);
             Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has left limbo");

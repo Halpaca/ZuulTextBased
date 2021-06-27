@@ -11,27 +11,27 @@ namespace ZuulTextBased.Utility.DataStructures
     /// Wrapper Class used to contain data red out by Lexicon.
     /// Used by Parser to make argument lists.
     /// </summary>
-    class ArgData
+    internal class ArgData
     {
-        public ArgType Type { get; private set; }
+        public ArgType ArgType { get; private set; }
 
         public object Container { get; private set; }
 
         public ArgData()
         {
-            Type = ArgType.Undefined;
+            ArgType = ArgType.Undefined;
             Container = new NullArgument();
         }
 
         public ArgData(Command Command)
         {
-            Type = ArgType.Command;
+            ArgType = ArgType.Command;
             Container = Command;
         }
 
         public ArgData(Direction direction)
         {
-            Type = ArgType.Direction;
+            ArgType = ArgType.Direction;
             Container = direction;
         }
 

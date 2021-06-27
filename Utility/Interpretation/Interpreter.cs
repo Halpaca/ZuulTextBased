@@ -8,12 +8,12 @@ namespace ZuulTextBased.Utility.Interpretation
     /// <summary>
     /// Responsible for creating a readable argument array for Command to execute with
     /// </summary>
-    internal class Parser
+    internal class Interpreter
     {
         public Analyzer Analyzer { get; private set; }
         public KeyValuePair<string, ArgData>[] Args { get; private set; }
 
-        public Parser()
+        public Interpreter()
         {
             Analyzer = new Analyzer();
         }
@@ -23,9 +23,9 @@ namespace ZuulTextBased.Utility.Interpretation
             return Args[0].Value.GetCommand();
         }
 
-        public void SetArguments(string source)
+        public void SetArguments(string userInput)
         {
-            string[] tokens = source.Split(' ');
+            string[] tokens = userInput.Split(' ');
             Args = new KeyValuePair<string, ArgData>[tokens.Length];
             for(int i = 0; i < Args.Length; i++)
             {

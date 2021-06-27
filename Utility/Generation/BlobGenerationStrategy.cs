@@ -8,12 +8,12 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Utility.Generation
 {
-    internal class BlobStrategy : FloorGenerationStrategy
+    internal class BlobGenerationStrategy : FloorGenerationStrategy
     {
         public List<Point> RoomCoordinates { get; private set; } //Represents generated room coordinates
         public List<Point> FullCoordinates { get; private set; } //Represents room coordinates with no more valid directions to generate to
 
-        public BlobStrategy(Floor floor) : base(floor)
+        public BlobGenerationStrategy(Floor floor) : base(floor)
         {
             RoomCoordinates = new List<Point>();
             FullCoordinates = new List<Point>();

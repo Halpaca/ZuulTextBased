@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ZuulTextBased.Commands.CommandEvents
 {
-    internal abstract class CommandEvent
+    internal abstract class Event
     {
-
+        public object data { get; protected set; }
     }
 }

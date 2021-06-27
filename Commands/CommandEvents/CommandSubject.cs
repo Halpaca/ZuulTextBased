@@ -5,35 +5,38 @@ using ZuulTextBased.Utility;
 
 namespace ZuulTextBased.Commands.CommandEvents
 {
-    class CommandSubject
+    /// <summary>
+    /// Subject class using observer pattern. Used to send Events to listeners.
+    /// </summary>
+    internal class CommandSubject : Subject
     {
         public List<ICommandObserver> Observers { get; private set; }
-        public CommandEvent State { get; private set; }
 
         public CommandSubject()
         {
             Observers = new List<ICommandObserver>();
         }
 
-        public void Subscibe(ICommandObserver observer)
+        public override void Subscibe(ICommandObserver observer)
         {
             Observers.Add(observer);
         }
 
-        public void Unsubscribe(ICommandObserver observer)
+        public override void Unsubscribe(ICommandObserver observer)
         {
             if(Observers.Contains(observer))
             {
                 Observers.Remove(observer);
             }
         }
-        public void Event(CommandEvent newState)
+
+        public override void Event(Event newState)
         {
             State = newState;
             Notify();
         }
 
-        private void Notify()
+        protected override void Notify()
         {
             foreach(ICommandObserver observer in Observers)
             {

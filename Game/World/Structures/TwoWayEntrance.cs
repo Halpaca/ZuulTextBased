@@ -21,12 +21,12 @@ namespace ZuulTextBased.Game.World.Structures
             Destinations.SetValues(area1, area2);
         }
 
-        public virtual void PassTrough(Agent entity, Area source)
+        public virtual void PassTrough(Entity entity, Area origin)
         {
             if(IsPassable())
             {
-                source.Leave(entity);
-                Destinations[source].Enter(entity);
+                origin.Leave(entity);
+                Destinations[origin].Enter(entity);
             }
         }
 

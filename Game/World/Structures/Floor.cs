@@ -11,20 +11,18 @@ namespace ZuulTextBased.Game.World.Structures
 {
     /// <summary>
     /// Floors are part of the basic dungeon structure and holds a number of linked areas
-    /// Default generates with a starting Room at index 0, 0
+    /// Generates with a starting Room at index 0, 0
     /// </summary>
     internal class Floor
     {
         public Dictionary<Point, Area> Areas { get; private set; }
         public FloorGenerationStrategy GenerationStrategy { get; private set; }
-        private Random _random;
 
         public Floor()
         {
-            _random = new Random();
             Areas = new Dictionary<Point, Area>();
             CreateRoom(new Point(0, 0));
-            GenerationStrategy = new BlobStrategy(this);
+            GenerationStrategy = new BlobGenerationStrategy(this);
         }
 
         public void Update()
@@ -56,9 +54,9 @@ namespace ZuulTextBased.Game.World.Structures
             Logger.Instance.Info(GetType(), $"Generated room at {coordinates.X}.{coordinates.Y}");
         }
 
-        public void LinkAreas(Point source, Direction direction, Point destination)
+        public void LinkAreas(Point origin, Direction direction, Point destination)
         {
-            AreaAt(source).LinkAreas(direction, AreaAt(destination), new Door()); //TOASK: Does the fail process lead to finalization of Door?
+            AreaAt(origin).LinkAreas(direction, AreaAt(destination), new Door()); //TOASK: Does the fail process lead to finalization of Door?
         }
 
         public Area AreaAt(Point coordinates)
@@ -79,6 +77,10 @@ namespace ZuulTextBased.Game.World.Structures
             return Areas.ContainsKey(coordinates);
         }
 
+        /// <summary>
+        /// TEST FUNCTION
+        /// TODO: refactor into cleaner code
+        /// </summary>
         public string AsciiMap()
         {
             Rectangle m = GetMapSize();
@@ -102,6 +104,10 @@ namespace ZuulTextBased.Game.World.Structures
             return asciiMap;
         }
 
+        /// <summary>
+        /// TEST FUNCTION
+        /// TODO: refactor into cleaner code
+        /// </summary>
         private Rectangle GetMapSize()
         {
             int offsetX = 0;

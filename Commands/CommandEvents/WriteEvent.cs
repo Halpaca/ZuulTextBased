@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ZuulTextBased.Commands.CommandEvents
 {
-    class WriteEvent : CommandEvent
+    class WriteEvent : Event
     {
         public string Message { get; private set; }
 

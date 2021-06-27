@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZuulTextBased.Game.World.Structures
+namespace ZuulTextBased.Game
 {
-    class Hallway : Area
+    class Renderer
     {
-
     }
 }

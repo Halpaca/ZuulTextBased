@@ -7,13 +7,15 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game
 {
+    /// <summary>
+    /// Main class, handles the game loop
+    /// </summary>
     internal class ZuulGame : ICommandObserver
     {
-        private bool _quit = false;
-        public WriteMode WriteTarget { get; set; }
+        public bool Quit { get; private set; }
+        public WriteMode WriteTarget { get; set; } //TODO: move responsibility of writing to a writer class(?)
         public Dungeon Dungeon { get; private set; }
-        public Player Player { get; private set; }
-        public Parser Parser { get; private set; }
+        public Interpreter Interpreter { get; private set; }
         public CommandSubject CommandSubject { get; private set; }
 
         public ZuulGame()
@@ -21,17 +23,19 @@ namespace ZuulTextBased.Game
             CommandSubject = new CommandSubject();
             CommandSubject.Subscibe(this);
 
-            Player = new Player();
-            CommandSubject.Subscibe(Player);
+            Player player = new Player();
+            CommandSubject.Subscibe(player);
 
             Dungeon = new Dungeon();
             Dungeon.GenerateActiveFloor(20);
-            Dungeon.AddToStartingFloor(Player);
+            Dungeon.AddToStartingFloor(player);
 
-            Parser = new Parser();
+            Interpreter = new Interpreter();
         }
 
-        //TODO: Describe the rooms in the game class
+        /// <summary>
+        /// Game Loop, does a step for the player, then the dungeon
+        /// </summary>
         internal void Run()
         {
             WriteOut("Welcome, type stuff below:");
@@ -42,10 +46,13 @@ namespace ZuulTextBased.Game
                 ExecuteNextCommand();
                 Dungeon.Update();
             }
-            while (!_quit);
+            while (!Quit);
         }
 
-        public void OnNotify(CommandEvent state)
+        /// <summary>
+        /// 
+        /// </summary>
+        public void OnNotify(Event state)
         {
             switch(state)
             {
@@ -53,7 +60,7 @@ namespace ZuulTextBased.Game
                     WriteOut(((WriteEvent)state).Message);
                     break;
                 case QuitEvent:
-                    Quit();
+                    QuitGame();
                     break;
             }
         }
@@ -61,13 +68,13 @@ namespace ZuulTextBased.Game
         private void AwaitUserInput()
         {
             string input = Console.ReadLine();
-            Parser.SetArguments(input);
+            Interpreter.SetArguments(input);
         }
 
         private void ExecuteNextCommand()
         {
-            Command c = Parser.GetCommand();
-            c.Execute(Parser.Args, CommandSubject);
+            Command c = Interpreter.GetCommand();
+            c.Execute(Interpreter.Args, CommandSubject);
         }
 
         /// <summary>
@@ -85,12 +92,12 @@ namespace ZuulTextBased.Game
             }
         }
 
-        private void Quit()
+        private void QuitGame()
         {
             if(PromptUser("Really Quit?", "y", "n") == true)
             {
                 WriteOut("OK, see you!");
-                _quit = true;
+                Quit = true;
             }
             else
             {
@@ -99,22 +106,22 @@ namespace ZuulTextBased.Game
             }
         }
 
-        private bool PromptUser(string question, string positive, string negative)
+        private bool PromptUser(string question, string y, string n)
         {
-            WriteOut(question + $" {positive}/{negative}");
+            WriteOut(question + $" {y}/{n}");
             string input = Console.ReadLine();
-            if(input.Equals(positive, StringComparison.OrdinalIgnoreCase))
+            if(input.Equals(y, StringComparison.OrdinalIgnoreCase))
             {
                 return true;
             }
-            else if(input.Equals(negative, StringComparison.OrdinalIgnoreCase))
+            else if(input.Equals(n, StringComparison.OrdinalIgnoreCase))
             {
                 return false;
             }
             else
             {
-                WriteOut($"Please answer with {positive} or {negative}");
-                return PromptUser(question, positive, negative);
+                WriteOut($"Please answer with {y} or {n}");
+                return PromptUser(question, y, n);
             }
         }
 

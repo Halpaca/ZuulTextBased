@@ -20,8 +20,13 @@ namespace ZuulTextBased.Game.World.Structures
         public Dungeon()
         {
             Floors = new List<Floor>();
-            CreateFloor(0);
+            AddFloor(0);
             _activeFloor = 0;
+        }
+
+        public void Update()
+        {
+            Floors[_activeFloor].Update();
         }
 
         public void AddToStartingFloor(Player player)
@@ -29,7 +34,7 @@ namespace ZuulTextBased.Game.World.Structures
             Floors[0].EnterPlayer(player);
         }
 
-        public void CreateFloor(int floorNumber)
+        public void AddFloor(int floorNumber)
         {
             if(Floors.ElementAtOrDefault(floorNumber) == null)
             {
@@ -44,11 +49,6 @@ namespace ZuulTextBased.Game.World.Structures
         public void GenerateActiveFloor(int areaCount)
         {
             Floors[_activeFloor].GenerateRooms(areaCount);
-        }
-
-        public void Update()
-        {
-            Floors[_activeFloor].Update();
         }
     }
 }

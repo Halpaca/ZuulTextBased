@@ -7,6 +7,6 @@ namespace ZuulTextBased.Commands.CommandEvents
 {
     interface ICommandObserver
     {
-        public abstract void OnNotify(CommandEvent state);
+        public abstract void OnNotify(Event state);
     }
 }

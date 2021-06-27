@@ -9,17 +9,17 @@ namespace ZuulTextBased.Game.World.Structures
     internal abstract class Area
     {
         public Dictionary<Direction, TwoWayEntrance> Exits { get; private set; }
-        public LinkedList<Agent> Entities { get; private set; } //Linkedlist because mid entries can leave, linking the other nodes
+        public LinkedList<Entity> Entities { get; private set; } //Linkedlist because mid entries can leave, linking the other nodes
 
         public Area()
         {
             Exits = new Dictionary<Direction, TwoWayEntrance>();
-            Entities = new LinkedList<Agent>();
+            Entities = new LinkedList<Entity>();
         }
 
         public void Update()
         {
-            foreach(Agent entity in Entities)
+            foreach(Entity entity in Entities)
             {
                 entity.Update();
             }    
@@ -40,7 +40,7 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
-        public void ToNextRoom(Agent entity, Direction direction)
+        public void ToNextArea(Entity entity, Direction direction)
         {
             if (ExitExists(direction))
             {
@@ -52,7 +52,7 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
-        public virtual void Enter(Agent entity)
+        public virtual void Enter(Entity entity)
         {
             Limbo.Instance.Leave(entity);
             Entities.AddLast(entity);
@@ -60,7 +60,7 @@ namespace ZuulTextBased.Game.World.Structures
             Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
         }
 
-        public virtual void Leave(Agent entity)
+        public virtual void Leave(Entity entity)
         {
             Entities.Remove(entity);
             Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has left {ToString()}");

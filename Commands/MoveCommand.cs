@@ -8,16 +8,15 @@ namespace ZuulTextBased.Commands
 {
     internal class MoveCommand : Command
     {
-        //TODO: exept up/down from here, not move event
-        public override void Execute(KeyValuePair<string, ArgData>[] args, CommandSubject subject)
+        public override void Execute(KeyValuePair<string, ArgData>[] args, CommandSubject commandSubject)
         {
             if(args.Length > 1)
             {
-                subject.Event(new MoveEvent(args[1].Value.GetDirection()));
+                commandSubject.Event(new MoveEvent(args[1].Value.GetDirection()));
             }
             else
             {
-                subject.Event(new WriteEvent("Where to?"));
+                commandSubject.Event(new WriteEvent("Where to?"));
             }
         }
     }

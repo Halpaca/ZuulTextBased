@@ -5,13 +5,13 @@ using ZuulTextBased.Utility;
 
 namespace ZuulTextBased.Commands.CommandEvents
 {
-    class MoveEvent : CommandEvent
+    class MoveEvent : Event
     {
-        public Direction Direction { get; private set; }
+        //public Direction Direction { get; private set; }
 
         public MoveEvent(Direction direction)
         {
-            Direction = direction;
+            data = direction;
         }
     }
 }

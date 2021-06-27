@@ -10,12 +10,12 @@ using ZuulTextBased.Utility.Logging;
 namespace ZuulTextBased.Utility.Generation
 {
     //TODO: Prototype is not working properly, needs rewrite
-    internal class BranchStrategy : FloorGenerationStrategy
+    internal class BranchGenerationStrategy : FloorGenerationStrategy
     {
         public Dictionary<Queue<Point>, Direction> ActiveBranches { get; }
         public List<Point> UsedCoordinates { get; }
 
-        public BranchStrategy(Floor floor) : base(floor)
+        public BranchGenerationStrategy(Floor floor) : base(floor)
         {
             ActiveBranches = new Dictionary<Queue<Point>, Direction>();
             UsedCoordinates = new List<Point>();

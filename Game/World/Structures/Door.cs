@@ -6,11 +6,12 @@ namespace ZuulTextBased.Game.World.Structures
 {
     internal class Door : TwoWayEntrance
     {
-        private Lock _lock;
+        //TODO: ILockable interface might work better, unless you want specific keys for specific locks?
+        //private Lock _lock;
 
-        public Door(Lock doorLock = null)
+        public Door(/*Lock doorLock = null*/)
         {
-            _lock = doorLock;
+            //_lock = doorLock;
         }
 
         public override bool IsPassable()

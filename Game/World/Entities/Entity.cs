@@ -8,12 +8,12 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game.World.Entities
 {
-    internal abstract class Agent
+    internal abstract class Entity
     {
         public Body Body { get; private set; }
         public Area CurrentArea { get; set; }
 
-        public Agent()
+        public Entity()
         {
             Body = new Body();
             CurrentArea = new Limbo();
@@ -27,7 +27,7 @@ namespace ZuulTextBased.Game.World.Entities
             {
                 if (true) //TODO: use Body.CanMove instead
                 {
-                    CurrentArea.ToNextRoom(this, direction);
+                    CurrentArea.ToNextArea(this, direction);
                 }
                 else
                 {
