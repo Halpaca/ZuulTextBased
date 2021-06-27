@@ -20,6 +20,9 @@ namespace ZuulTextBased.Utility.Interpretation
             Lexicon = new Lexicon();
         }
 
+        /// <summary>
+        /// Checks whenether a token is part of the lexicon, and returns the matching element as an argdata wrapper object
+        /// </summary>
         public ArgData GetDataOf(string token)
         {
             if (Lexicon.Commands.ContainsKey(token))
@@ -38,7 +41,11 @@ namespace ZuulTextBased.Utility.Interpretation
             }
         }
 
-        public Type GetCommandTypeOf(string token)
+        /// <summary>
+        /// Helper function to find the command Type of a specified token
+        /// Returns a special case object if a command is not found
+        /// </summary>
+        private Type GetCommandTypeOf(string token)
         {
             if (Lexicon.Commands.ContainsKey(token))
             {
@@ -47,12 +54,16 @@ namespace ZuulTextBased.Utility.Interpretation
             }
             else
             {
-                Logger.Instance.Info(GetType(), $"No command found with key: {token}, returning special case object");
+                Logger.Instance.Warn(GetType(), $"No command found with key: {token}, returning special case object");
                 return typeof(CommandNotFound);
             }
         }
 
-        public Direction GetDirectionOf(string token)
+        /// <summary>
+        /// Helper function to find the direction Type of a specified token
+        /// Returns a special case object if a direction is not found
+        /// </summary>
+        private Direction GetDirectionOf(string token)
         {
             if (Lexicon.Directions.ContainsKey(token))
             {
@@ -61,7 +72,7 @@ namespace ZuulTextBased.Utility.Interpretation
             }
             else
             {
-                Logger.Instance.Info(GetType(), $"No direction found with key: {token}, returning special case object");
+                Logger.Instance.Warn(GetType(), $"No direction found with key: {token}, returning special case object");
                 return Direction.None;
             }
         }

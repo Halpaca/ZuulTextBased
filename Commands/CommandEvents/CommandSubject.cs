@@ -10,19 +10,19 @@ namespace ZuulTextBased.Commands.CommandEvents
     /// </summary>
     internal class CommandSubject : Subject
     {
-        public List<ICommandObserver> Observers { get; private set; }
+        public List<IObserver> Observers { get; private set; }
 
         public CommandSubject()
         {
-            Observers = new List<ICommandObserver>();
+            Observers = new List<IObserver>();
         }
 
-        public override void Subscibe(ICommandObserver observer)
+        public override void Subscibe(IObserver observer)
         {
             Observers.Add(observer);
         }
 
-        public override void Unsubscribe(ICommandObserver observer)
+        public override void Unsubscribe(IObserver observer)
         {
             if(Observers.Contains(observer))
             {
@@ -38,7 +38,7 @@ namespace ZuulTextBased.Commands.CommandEvents
 
         protected override void Notify()
         {
-            foreach(ICommandObserver observer in Observers)
+            foreach(IObserver observer in Observers)
             {
                 observer.OnNotify(State);
             }

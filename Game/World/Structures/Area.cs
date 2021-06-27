@@ -25,6 +25,9 @@ namespace ZuulTextBased.Game.World.Structures
             }    
         }
 
+        /// <summary>
+        /// Links this area to another area and creates an entrance inbetween them
+        /// </summary>
         public void LinkAreas(Direction direction, Area destination, TwoWayEntrance entrance)
         {
             Direction inverseDirection = Directions.Inverse(direction);
@@ -40,6 +43,9 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
+        /// <summary>
+        /// Used by entities to travel between areas
+        /// </summary>
         public void ToNextArea(Entity entity, Direction direction)
         {
             if (ExitExists(direction))
@@ -52,6 +58,9 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
+        /// <summary>
+        /// Used by entrances to move an entity from limbo to this area
+        /// </summary>
         public virtual void Enter(Entity entity)
         {
             Limbo.Instance.Leave(entity);
@@ -60,6 +69,9 @@ namespace ZuulTextBased.Game.World.Structures
             Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
         }
 
+        /// <summary>
+        /// Used by entrances to move an entity from this area to limbo, a special case object
+        /// </summary>
         public virtual void Leave(Entity entity)
         {
             Entities.Remove(entity);

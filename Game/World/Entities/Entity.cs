@@ -25,14 +25,8 @@ namespace ZuulTextBased.Game.World.Entities
         {
             if(direction != Direction.None)
             {
-                if (true) //TODO: use Body.CanMove instead
-                {
-                    CurrentArea.ToNextArea(this, direction);
-                }
-                else
-                {
-                    //TODO: Write reason why you can't move
-                }
+                //TODO: use Body.CanMove instead
+                CurrentArea.ToNextArea(this, direction);
             }
         }
     }

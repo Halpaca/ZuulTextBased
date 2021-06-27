@@ -29,6 +29,10 @@ namespace ZuulTextBased.Game.World.Structures
             Floors[_activeFloor].Update();
         }
 
+        /// <summary>
+        /// Function that is called once at the start of the game, 
+        /// after the player has subscribed to the Command Subject
+        /// </summary>
         public void AddToStartingFloor(Player player)
         {
             Floors[0].EnterPlayer(player);

@@ -7,7 +7,7 @@ using System.Text;
 namespace ZuulTextBased.Utility
 {
     /// <summary>
-    /// Utility class for Direction, which adds some helper functions and consts
+    /// Utility class for Direction, which adds some helper functions and constants
     /// </summary>
     internal static class Directions
     {
@@ -41,8 +41,6 @@ namespace ZuulTextBased.Utility
             return All[_random.Next(0, All.Length)];
         }
 
-
-        //TODO: East should have -1 and west should have 1
         public static Point ToPoint(Direction direction)
         {
             switch (direction)

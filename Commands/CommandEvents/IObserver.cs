@@ -5,7 +5,7 @@ using ZuulTextBased.Commands.CommandEvents;
 
 namespace ZuulTextBased.Commands.CommandEvents
 {
-    interface ICommandObserver
+    interface IObserver
     {
         public abstract void OnNotify(Event state);
     }

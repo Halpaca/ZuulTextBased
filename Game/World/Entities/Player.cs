@@ -6,7 +6,7 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game
 {
-    internal class Player : Entity, ICommandObserver
+    internal class Player : Entity, IObserver
     {
         //Todo: add senses
 

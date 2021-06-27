@@ -8,6 +8,10 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Utility.Interpretation
 {
+    /// <summary>
+    /// Responsible for matching user input tokens with matching elements
+    /// Currently hardcoded, but later to be loaded in via data files
+    /// </summary>
     class Lexicon
     {
         public Dictionary<string, Type> Commands { get; private set; }

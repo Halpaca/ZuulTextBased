@@ -10,7 +10,7 @@ namespace ZuulTextBased.Game
     /// <summary>
     /// Main class, handles the game loop
     /// </summary>
-    internal class ZuulGame : ICommandObserver
+    internal class ZuulGame : IObserver
     {
         public bool Quit { get; private set; }
         public WriteMode WriteTarget { get; set; } //TODO: move responsibility of writing to a writer class(?)
@@ -50,12 +50,14 @@ namespace ZuulTextBased.Game
         }
 
         /// <summary>
-        /// 
+        /// Event handling for the write and quit events.
+        /// Used when quitting the game or writing to the frontend.
         /// </summary>
         public void OnNotify(Event state)
         {
             switch(state)
             {
+                //TODO: move writing to the writer class, call it here or make it subscribe to the command subject
                 case WriteEvent:
                     WriteOut(((WriteEvent)state).Message);
                     break;
@@ -65,12 +67,19 @@ namespace ZuulTextBased.Game
             }
         }
 
+        /// <summary>
+        /// Reads input of the user, 
+        /// then sends the string off to the interpreter for tokenization and analyzation
+        /// </summary>
         private void AwaitUserInput()
         {
             string input = Console.ReadLine();
             Interpreter.SetArguments(input);
         }
 
+        /// <summary>
+        /// Executes the command found by the interpreter, and adds any other arguments given by the player
+        /// </summary>
         private void ExecuteNextCommand()
         {
             Command c = Interpreter.GetCommand();
@@ -92,6 +101,10 @@ namespace ZuulTextBased.Game
             }
         }
 
+        /// <summary>
+        /// Promts the user to quit and breaks the game loop on a yes.
+        /// On a no the game returns to the loop
+        /// </summary>
         private void QuitGame()
         {
             if(PromptUser("Really Quit?", "y", "n") == true)
@@ -101,11 +114,15 @@ namespace ZuulTextBased.Game
             }
             else
             {
+                //TODO: returning should skip the dungeon update step, it should still be the players turn
                 WriteOut("OK! Returning...");
-                //TODO: write last world step as reminder
+                //TODO: write last world update step as reminder of what happened
             }
         }
 
+        /// <summary>
+        /// Promts the user, then returns true or false based on the answer
+        /// </summary>
         private bool PromptUser(string question, string y, string n)
         {
             WriteOut(question + $" {y}/{n}");
