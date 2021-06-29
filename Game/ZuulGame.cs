@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using ZuulTextBased.Commands;
 using ZuulTextBased.Commands.CommandEvents;
 using ZuulTextBased.Game.World.Structures;
@@ -28,7 +29,8 @@ namespace ZuulTextBased.Game
 
             Dungeon = new Dungeon();
             Dungeon.GenerateActiveFloor(20);
-            Dungeon.AddToStartingFloor(player);
+
+            player.MoveToArea(Dungeon.GetActiveFloor().AreaAt(new Point(0, 0)));
 
             Interpreter = new Interpreter();
         }

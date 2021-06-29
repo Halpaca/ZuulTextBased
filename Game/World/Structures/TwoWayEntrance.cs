@@ -22,15 +22,6 @@ namespace ZuulTextBased.Game.World.Structures
             Destinations.SetValues(area1, area2);
         }
 
-        public virtual void PassTrough(Entity entity, Area origin)
-        {
-            if(IsPassable())
-            {
-                origin.RemoveEntity(entity);
-                GetDestination(origin).AddEntity(entity);
-            }
-        }
-
         public virtual Area GetDestination(Area origin)
         {
             return Destinations[origin];

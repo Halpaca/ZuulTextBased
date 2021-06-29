@@ -29,15 +29,6 @@ namespace ZuulTextBased.Game.World.Structures
             Floors[_activeFloor].Update();
         }
 
-        /// <summary>
-        /// Function that is called once at the start of the game, 
-        /// after the player has subscribed to the Command Subject
-        /// </summary>
-        public void AddToStartingFloor(Player player)
-        {
-            Floors[0].EnterPlayer(player);
-        }
-
         public void AddFloor(int floorNumber)
         {
             if(Floors.ElementAtOrDefault(floorNumber) == null)
@@ -53,6 +44,11 @@ namespace ZuulTextBased.Game.World.Structures
         public void GenerateActiveFloor(int areaCount)
         {
             Floors[_activeFloor].GenerateRooms(areaCount);
+        }
+
+        public Floor GetActiveFloor()
+        {
+            return Floors[_activeFloor];
         }
     }
 }

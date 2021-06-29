@@ -16,7 +16,8 @@ namespace ZuulTextBased.Game.World.Entities
         public Entity()
         {
             Body = new Body();
-            SetArea(Limbo.Instance);
+            CurrentArea = Limbo.Instance;
+            Limbo.Instance.AddEntity(this, true);
         }
 
         public abstract void Update();
@@ -37,14 +38,15 @@ namespace ZuulTextBased.Game.World.Entities
             }
         }
 
-        private void MoveToArea(Area nextArea)
+        public void MoveToArea(Area nextArea)
         {
             CurrentArea.RemoveEntity(this);
             SetArea(nextArea);
         }
 
-        public void SetArea(Area area)
+        private void SetArea(Area area)
         {
+            Logger.Instance.Info(GetType(), $"Player is moving from {CurrentArea} to {area}");
             CurrentArea = area;
             CurrentArea.AddEntity(this);
         }

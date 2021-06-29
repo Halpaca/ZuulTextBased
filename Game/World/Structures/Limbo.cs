@@ -20,7 +20,7 @@ namespace ZuulTextBased.Game.World.Structures
         /// <summary>
         /// Overloaded function. Add true to the bool to let the program know the entity is transistioning between areas
         /// </summary>
-        public void Enter(Entity entity, bool intentional)
+        public void AddEntity(Entity entity, bool intentional)
         {
             if(intentional)
             {
@@ -44,7 +44,7 @@ namespace ZuulTextBased.Game.World.Structures
             {
                 Logger.Instance.Debug(GetType(), $"Enity {entity.GetType().Name} was already added to limbo, breaking loop");
             }
-            //TODO: add error handling for the player by adding a portal to the starting room of the current floor
+            //TODO: add some sort of error handling for the player if they enter limbo due to a bug
         }
 
         public override bool RemoveEntity(Entity entity)

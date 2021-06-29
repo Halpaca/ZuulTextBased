@@ -33,11 +33,6 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
-        public void EnterPlayer(Player player)
-        {
-            AreaAt(new Point(0, 0)).AddEntity(player);
-        }
-
         public void GenerateRooms(int amount)
         {
             GenerationStrategy.GenerateRooms(amount);
