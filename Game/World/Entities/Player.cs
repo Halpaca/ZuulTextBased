@@ -26,7 +26,7 @@ namespace ZuulTextBased.Game
             {
                 //TODO: Describe the rooms after a move
                 case MoveEvent:
-                    Logger.Instance.Info(GetType(), $"Entity {GetType().Name} moving in direction {(Direction)state.data}");
+                    Logger.Instance.Info(GetType(), $"{GetType().Name} moving in direction {(Direction)state.data}");
                     Move((Direction)state.data);
                     break;
             }

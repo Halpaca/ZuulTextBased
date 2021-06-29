@@ -17,7 +17,7 @@ namespace ZuulTextBased.Game.World.Entities
         {
             Body = new Body();
             CurrentArea = Limbo.Instance;
-            Limbo.Instance.AddEntity(this, true);
+            Limbo.Instance.AddEntity(this);
         }
 
         public abstract void Update();

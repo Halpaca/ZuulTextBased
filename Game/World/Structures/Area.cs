@@ -56,40 +56,33 @@ namespace ZuulTextBased.Game.World.Structures
             return Exits[direction].GetDestination(this);
         }
 
-        /// <summary>
-        /// Used by entrances to move an entity from limbo to this area
-        /// </summary>
         public virtual void AddEntity(Entity entity)
         {
             if(!Entities.Contains(entity))
             {
-                //Limbo.Instance.RemoveEntity(entity);
                 Entities.AddLast(entity);
-                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
+                Logger.Instance.Info(GetType(), $"Entity {entity} has entered {ToString()}");
             }
             else
             {
                 if(entity.CurrentArea == this)
+                {
                     Logger.Instance.Debug(GetType(), $"{ToString()} contains entity, bi-directional association is assumed");
+                }
             }
         }
 
-        /// <summary>
-        /// Used by entrances to move an entity from this area to limbo, a special case object
-        /// Returns true if the entity existed and was removed succesfully
-        /// </summary>
         public virtual bool RemoveEntity(Entity entity)
         {
             if (Entities.Contains(entity))
             {
                 Entities.Remove(entity);
-                //Limbo.Instance.AddEntity(entity, true); //Add entity to limbo, prevents null
-                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has left {ToString()}");
+                Logger.Instance.Info(GetType(), $"{entity} has left {ToString()}");
                 return true;
             }
             else
             {
-                Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} does not exist in Room: {ToString()}");
+                Logger.Instance.Warn(GetType(), $"{entity} does not exist in Room: {ToString()}");
                 //TODO: consider adding Limbo add here
                 return false;
             }
