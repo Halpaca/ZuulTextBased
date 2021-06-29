@@ -27,6 +27,7 @@ namespace ZuulTextBased.Game.World.Entities
             if (direction != Direction.None)
             {
                 CurrentArea = CurrentArea.NextArea(this, direction);
+                CurrentArea.AddEntity(this);
             }
         }
     }
