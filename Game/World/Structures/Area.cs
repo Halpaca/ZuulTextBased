@@ -43,22 +43,17 @@ namespace ZuulTextBased.Game.World.Structures
             }
         }
 
+        public bool CanMoveTo(Direction direction)
+        {
+            return ExitExists(direction) && Exits[direction].IsPassable();
+        }
+
         /// <summary>
         /// Used by entities to travel between areas
         /// </summary>
-        public Area NextArea(Entity entity, Direction direction)
+        public Area GetFromDirection(Direction direction)
         {
-            //Moving responsibility to Area for moving entities instead of TwoWayEntrance. To be removed if the new code works
-            //Exits[direction].PassTrough(entity, this);
-            if (ExitExists(direction) && Exits[direction].IsPassable())
-            {
-                return Exits[direction].GetDestination(this);
-            }
-            else
-            {
-                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} walked towards a non-entrance and bumped their head");
-                return this;
-            }
+            return Exits[direction].GetDestination(this);
         }
 
         /// <summary>
@@ -66,17 +61,38 @@ namespace ZuulTextBased.Game.World.Structures
         /// </summary>
         public virtual void AddEntity(Entity entity)
         {
-            Limbo.Instance.RemoveEntity(entity);
-            Entities.AddLast(entity);
-            entity.CurrentArea = this;
-            Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
+            if(!Entities.Contains(entity))
+            {
+                Limbo.Instance.RemoveEntity(entity);
+                Entities.AddLast(entity);
+                entity.SetArea(this);
+                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
+            }
+            else
+            {
+                Logger.Instance.Debug(GetType(), $"Enity {entity.GetType().Name} was already added to {GetType()}, breaking loop");
+            }
         }
 
         /// <summary>
         /// Used by entrances to move an entity from this area to limbo, a special case object
         /// Returns true if the entity existed and was removed succesfully
         /// </summary>
-        public abstract bool RemoveEntity(Entity entity);
+        public virtual bool RemoveEntity(Entity entity)
+        {
+            if (Entities.Contains(entity))
+            {
+                Entities.Remove(entity);
+                Limbo.Instance.Enter(entity, true); //Add entity to limbo, prevents null
+                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has left {ToString()}");
+                return true;
+            }
+            else
+            {
+                Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} does not exist in Room: {ToString()}");
+                return false;
+            }
+        }
 
         public bool ExitExists(Direction direction)
         {

@@ -11,6 +11,8 @@ namespace ZuulTextBased.Utility.Logging
         public LogLevel LogLevel { get; set; }
         public WriteMode WriteMode { get; set; }
 
+        private Logger() { }
+
         /// <summary>
         /// Used for major breaks that will make it difficult for the program to still keep running
         /// </summary>

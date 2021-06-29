@@ -15,6 +15,8 @@ namespace ZuulTextBased.Game.World.Structures
     {
         public static Limbo Instance { get; } = new Limbo();
 
+        private Limbo() { }
+
         /// <summary>
         /// Overloaded function. Add true to the bool to let the program know the entity is transistioning between areas
         /// </summary>
@@ -23,7 +25,6 @@ namespace ZuulTextBased.Game.World.Structures
             if(intentional)
             {
                 Entities.AddLast(entity);
-                entity.CurrentArea = this;
                 Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has entered limbo (Intentional)");
             }
             else
@@ -34,9 +35,15 @@ namespace ZuulTextBased.Game.World.Structures
 
         public override void AddEntity(Entity entity)
         {
-            Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} has entered limbo unintentionally");
-            Entities.AddLast(entity);
-            entity.CurrentArea = this;
+            if(!Entities.Contains(entity))
+            {
+                Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} has entered limbo unintentionally");
+                Entities.AddLast(entity);
+            }
+            else
+            {
+                Logger.Instance.Debug(GetType(), $"Enity {entity.GetType().Name} was already added to limbo, breaking loop");
+            }
             //TODO: add error handling for the player by adding a portal to the starting room of the current floor
         }
 
