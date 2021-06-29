@@ -28,11 +28,11 @@ namespace ZuulTextBased.Game.World.Structures
             }
             else
             {
-                Enter(entity);
+                AddEntity(entity);
             }
         }
 
-        public override void Enter(Entity entity)
+        public override void AddEntity(Entity entity)
         {
             Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} has entered limbo unintentionally");
             Entities.AddLast(entity);
@@ -40,10 +40,18 @@ namespace ZuulTextBased.Game.World.Structures
             //TODO: add error handling for the player by adding a portal to the starting room of the current floor
         }
 
-        public override void Leave(Entity entity)
+        public override bool RemoveEntity(Entity entity)
         {
-            Entities.Remove(entity);
-            Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has left limbo");
+            if(Entities.Contains(entity))
+            {
+                Logger.Instance.Debug(GetType(), $"Entity {entity.GetType().Name} has left limbo");
+                return Entities.Remove(entity);
+            }
+            else
+            {
+                Logger.Instance.Warn(GetType(), $"Entity {entity.GetType().Name} does not exist in limbo");
+                return false;
+            }
         }
     }
 }

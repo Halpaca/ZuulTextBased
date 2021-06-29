@@ -61,23 +61,21 @@ namespace ZuulTextBased.Game.World.Structures
         /// <summary>
         /// Used by entrances to move an entity from limbo to this area
         /// </summary>
-        public virtual void Enter(Entity entity)
+        public virtual void AddEntity(Entity entity)
         {
-            Limbo.Instance.Leave(entity);
-            Entities.AddLast(entity);
-            entity.CurrentArea = this;
-            Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
+            if(Limbo.Instance.RemoveEntity(entity))
+            {
+                Entities.AddLast(entity);
+                entity.CurrentArea = this;
+                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
+            }
         }
 
         /// <summary>
         /// Used by entrances to move an entity from this area to limbo, a special case object
+        /// Returns true if the entity existed and was removed succesfully
         /// </summary>
-        public virtual void Leave(Entity entity)
-        {
-            Entities.Remove(entity);
-            Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has left {ToString()}");
-            Limbo.Instance.Enter(entity, true); //Set transistional space in case any error occurs, prevents null
-        }
+        public abstract bool RemoveEntity(Entity entity);
 
         public bool ExitExists(Direction direction)
         {

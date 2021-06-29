@@ -26,9 +26,14 @@ namespace ZuulTextBased.Game.World.Structures
         {
             if(IsPassable())
             {
-                origin.Leave(entity);
-                Destinations[origin].Enter(entity);
+                origin.RemoveEntity(entity);
+                GetDestination(origin).AddEntity(entity);
             }
+        }
+
+        public virtual Area GetDestination(Area origin)
+        {
+            return Destinations[origin];
         }
 
         public abstract bool IsPassable();
