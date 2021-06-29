@@ -9,7 +9,7 @@ namespace ZuulTextBased.Commands
     class ClimbCommand : Command
     {
         //TODO: add climb to lexicon and think about up/down
-        public override void Execute(KeyValuePair<string, ArgData>[] args, CommandSubject subject)
+        public override void Execute(KeyValuePair<string, ArgData>[] args, Subject subject)
         {
             throw new NotImplementedException();
         }

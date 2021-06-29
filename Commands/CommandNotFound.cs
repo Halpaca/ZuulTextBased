@@ -11,7 +11,7 @@ namespace ZuulTextBased.Commands
     /// </summary>
     class CommandNotFound : Command
     {
-        public override void Execute(KeyValuePair<string, ArgData>[] args, CommandSubject subject)
+        public override void Execute(KeyValuePair<string, ArgData>[] args, Subject subject)
         {
             subject.Event(new WriteEvent($"Command not found with name: {args[0].Key}"));
         }

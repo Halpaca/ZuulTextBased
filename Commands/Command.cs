@@ -8,6 +8,6 @@ namespace ZuulTextBased.Commands
 {
     abstract class Command
     {
-        public abstract void Execute(KeyValuePair<string, ArgData>[] args, CommandSubject subject);
+        public abstract void Execute(KeyValuePair<string, ArgData>[] args, Subject subject);
     }
 }
