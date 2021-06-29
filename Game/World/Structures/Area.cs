@@ -46,15 +46,18 @@ namespace ZuulTextBased.Game.World.Structures
         /// <summary>
         /// Used by entities to travel between areas
         /// </summary>
-        public void ToNextArea(Entity entity, Direction direction)
+        public Area NextArea(Entity entity, Direction direction)
         {
-            if (ExitExists(direction))
+            //Moving responsibility to Area for moving entities instead of TwoWayEntrance. To be removed if the new code works
+            //Exits[direction].PassTrough(entity, this);
+            if (ExitExists(direction) && Exits[direction].IsPassable())
             {
-                Exits[direction].PassTrough(entity, this);
+                return Exits[direction].GetDestination(this);
             }
             else
             {
                 Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} walked towards a non-entrance and bumped their head");
+                return this;
             }
         }
 
@@ -63,12 +66,10 @@ namespace ZuulTextBased.Game.World.Structures
         /// </summary>
         public virtual void AddEntity(Entity entity)
         {
-            if(Limbo.Instance.RemoveEntity(entity))
-            {
-                Entities.AddLast(entity);
-                entity.CurrentArea = this;
-                Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
-            }
+            Limbo.Instance.RemoveEntity(entity);
+            Entities.AddLast(entity);
+            entity.CurrentArea = this;
+            Logger.Instance.Info(GetType(), $"Entity {entity.GetType().Name} has entered {ToString()}");
         }
 
         /// <summary>

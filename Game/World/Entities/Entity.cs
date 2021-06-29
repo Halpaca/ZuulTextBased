@@ -23,10 +23,10 @@ namespace ZuulTextBased.Game.World.Entities
 
         public virtual void Move(Direction direction)
         {
-            if(direction != Direction.None)
+            //TODO: add Body.CanMove
+            if (direction != Direction.None)
             {
-                //TODO: use Body.CanMove instead
-                CurrentArea.ToNextArea(this, direction);
+                CurrentArea = CurrentArea.NextArea(this, direction);
             }
         }
     }
