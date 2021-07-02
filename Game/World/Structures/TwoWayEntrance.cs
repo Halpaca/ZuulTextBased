@@ -7,7 +7,6 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game.World.Structures
 {
-    //TODO: using a GetDestination function omits the use of Limbo, might save a lot of boilerplater
     internal abstract class TwoWayEntrance
     {
         public TwoWayValuePair<Area> Destinations { get; private set; }

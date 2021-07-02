@@ -49,11 +49,19 @@ namespace ZuulTextBased.Game.World.Structures
         }
 
         /// <summary>
-        /// Used by entities to travel between areas
+        /// Returns the Area of the given direction regardless of the state of TwoWayEntrance.
+        /// If TwoWayEntance does not exist in the given direction, it returns Limbo as a special case object
         /// </summary>
         public Area GetFromDirection(Direction direction)
         {
-            return Exits[direction].GetDestination(this);
+            if (ExitExists(direction))
+            {
+                return Exits[direction].GetDestination(this);
+            }
+            else
+            {
+                return Limbo.Instance;
+            }
         }
 
         public virtual void AddEntity(Entity entity)
@@ -83,7 +91,6 @@ namespace ZuulTextBased.Game.World.Structures
             else
             {
                 Logger.Instance.Warn(GetType(), $"{entity} does not exist in Room: {ToString()}");
-                //TODO: consider adding Limbo add here
                 return false;
             }
         }

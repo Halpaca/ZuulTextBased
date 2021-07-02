@@ -22,7 +22,7 @@ namespace ZuulTextBased.Game.World.Entities
 
         public abstract void Update();
 
-        public virtual void Move(Direction direction)
+        protected virtual void Move(Direction direction)
         {
             //TODO: add Body.CanMove
             if (direction != Direction.None)
