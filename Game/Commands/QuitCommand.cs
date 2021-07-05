@@ -1,10 +1,10 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using ZuulTextBased.Commands.CommandEvents;
+using ZuulTextBased.Game.Commands.CommandEvents;
 using ZuulTextBased.Utility.DataStructures;
 
-namespace ZuulTextBased.Commands
+namespace ZuulTextBased.Game.Commands
 {
     internal class QuitCommand : Command
     {

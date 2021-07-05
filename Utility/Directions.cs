@@ -17,20 +17,14 @@ namespace ZuulTextBased.Utility
 
         public static Direction Inverse(Direction direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case Direction.North:
-                    return Direction.South;
-                case Direction.East:
-                    return Direction.West;
-                case Direction.South:
-                    return Direction.North;
-                case Direction.West:
-                    return Direction.East;
-                case Direction.None:
-                default:
-                    return Direction.None;
-            }
+                Direction.North => Direction.South,
+                Direction.East => Direction.West,
+                Direction.South => Direction.North,
+                Direction.West => Direction.East,
+                _ => Direction.None
+            };
         }
 
         /// <summary>
@@ -43,20 +37,14 @@ namespace ZuulTextBased.Utility
 
         public static Point ToPoint(Direction direction)
         {
-            switch (direction)
+            return direction switch
             {
-                case Direction.North:
-                    return new Point(0, -1);
-                case Direction.East:
-                    return new Point(1, 0);
-                case Direction.South:
-                    return new Point(0, 1);
-                case Direction.West:
-                    return new Point(-1, 0);
-                case Direction.None:
-                default:
-                    return new Point(0, 0);
-            }
+                Direction.North => new Point(0, -1),
+                Direction.East => new Point(1, 0),
+                Direction.South => new Point(0, 1),
+                Direction.West => new Point(-1, 0),
+                _ => new Point(0, 0)
+            };
         }
 
         private static Direction[] GetAllDirections()

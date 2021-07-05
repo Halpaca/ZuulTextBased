@@ -1,5 +1,5 @@
 ﻿
-using ZuulTextBased.Commands.CommandEvents;
+using ZuulTextBased.Game.Commands.CommandEvents;
 using ZuulTextBased.Game.World.Entities;
 using ZuulTextBased.Utility;
 using ZuulTextBased.Utility.Logging;
@@ -26,8 +26,8 @@ namespace ZuulTextBased.Game
             {
                 //TODO: Describe the rooms after a move
                 case MoveEvent:
-                    Logger.Instance.Info(GetType(), $"{GetType().Name} moving in direction {(Direction)state.data}");
-                    Move((Direction)state.data);
+                    Logger.Instance.Info(GetType(), $"{GetType().Name} moving in direction {(Direction)state.Data}");
+                    Move((Direction)state.Data);
                     break;
             }
         }

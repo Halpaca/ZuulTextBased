@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ZuulTextBased.Commands.CommandEvents;
+using ZuulTextBased.Game.Commands.CommandEvents;
 
-namespace ZuulTextBased.Commands.CommandEvents
+namespace ZuulTextBased.Game.Commands.CommandEvents
 {
     interface IObserver
     {

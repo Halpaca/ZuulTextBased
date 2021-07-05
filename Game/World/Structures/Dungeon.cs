@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using ZuulTextBased.Commands;
+using ZuulTextBased.Game.Commands;
 using ZuulTextBased.Utility;
 using ZuulTextBased.Utility.Logging;
 

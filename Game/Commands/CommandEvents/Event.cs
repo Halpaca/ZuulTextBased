@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZuulTextBased.Commands.CommandEvents
+namespace ZuulTextBased.Game.Commands.CommandEvents
 {
     internal abstract class Event
     {
-        public object data { get; protected set; }
+        public object Data { get; protected set; }
     }
 }

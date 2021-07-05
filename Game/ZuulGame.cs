@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using ZuulTextBased.Commands;
-using ZuulTextBased.Commands.CommandEvents;
+using System.Text;
+using ZuulTextBased.Game.Commands;
+using ZuulTextBased.Game.Commands.CommandEvents;
+using ZuulTextBased.Game.View;
 using ZuulTextBased.Game.World.Structures;
 using ZuulTextBased.Utility.Interpretation;
 using ZuulTextBased.Utility.Logging;
@@ -14,9 +16,9 @@ namespace ZuulTextBased.Game
     internal class ZuulGame : IObserver
     {
         public bool Quit { get; private set; }
-        public WriteMode WriteTarget { get; set; } //TODO: move responsibility of writing to a writer class(?)
         public Dungeon Dungeon { get; private set; }
         public Interpreter Interpreter { get; private set; }
+        public Writer Writer { get; private set; }
         public CommandSubject CommandSubject { get; private set; }
 
         public ZuulGame()
@@ -24,15 +26,17 @@ namespace ZuulTextBased.Game
             CommandSubject = new CommandSubject();
             CommandSubject.Subscibe(this);
 
-            Player player = new Player();
-            CommandSubject.Subscibe(player);
-
             Dungeon = new Dungeon();
             Dungeon.GenerateActiveFloor(20);
 
+            Player player = new Player();
+            CommandSubject.Subscibe(player);
             player.MoveToArea(Dungeon.GetActiveFloor().AreaAt(new Point(0, 0)));
 
             Interpreter = new Interpreter();
+
+            Writer = new Writer(128, 48);
+            CommandSubject.Subscibe(Writer);
         }
 
         /// <summary>
@@ -40,15 +44,24 @@ namespace ZuulTextBased.Game
         /// </summary>
         internal void Run()
         {
-            WriteOut("Welcome, type stuff below:");
+            Writer.Write("Welcome, type stuff below:");
             do
             {
-                Console.Write("> ");
-                AwaitUserInput();
-                ExecuteNextCommand();
-                Dungeon.Update();
+                PlayerStep();
+                DungeonStep();
             }
             while (!Quit);
+        }
+
+        private void PlayerStep()
+        {
+            AwaitUserInput();
+            ExecuteNextCommand();
+        }
+
+        private void DungeonStep()
+        {
+            Dungeon.Update();
         }
 
         /// <summary>
@@ -59,10 +72,6 @@ namespace ZuulTextBased.Game
         {
             switch(state)
             {
-                //TODO: move writing to the writer class, call it here or make it subscribe to the command subject
-                case WriteEvent:
-                    WriteOut(((WriteEvent)state).Message);
-                    break;
                 case QuitEvent:
                     QuitGame();
                     break;
@@ -89,21 +98,6 @@ namespace ZuulTextBased.Game
         }
 
         /// <summary>
-        /// The only function that should write out text to the player.
-        /// To be refactored to send to a custom window instead of the console
-        /// </summary>
-        /// <param name="message">The message to be printed</param>
-        private void WriteOut(string message)
-        {
-            switch(WriteTarget)
-            {
-                case WriteMode.Console:
-                Console.WriteLine(message);
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Promts the user to quit and breaks the game loop on a yes.
         /// On a no the game returns to the loop
         /// </summary>
@@ -111,13 +105,13 @@ namespace ZuulTextBased.Game
         {
             if(PromptUser("Really Quit?", "y", "n") == true)
             {
-                WriteOut("OK, see you!");
+                Writer.Write("OK, see you!");
                 Quit = true;
             }
             else
             {
                 //TODO: returning should skip the dungeon update step, it should still be the players turn
-                WriteOut("OK! Returning...");
+                Writer.Write("OK! Returning...");
                 //TODO: write last world update step as reminder of what happened
             }
         }
@@ -127,7 +121,7 @@ namespace ZuulTextBased.Game
         /// </summary>
         private bool PromptUser(string question, string y, string n)
         {
-            WriteOut(question + $" {y}/{n}");
+            Writer.Write(question + $" {y}/{n}");
             string input = Console.ReadLine();
             if(input.Equals(y, StringComparison.OrdinalIgnoreCase))
             {
@@ -139,9 +133,30 @@ namespace ZuulTextBased.Game
             }
             else
             {
-                WriteOut($"Please answer with {y} or {n}");
+                Writer.Write($"Please answer with {y} or {n}");
                 return PromptUser(question, y, n);
             }
+        }
+
+        /// <summary>
+        /// Experimental
+        /// Test Function for future implementation for the Writer class and to be changed later
+        /// Not fully implemented, currently used to draw the main screen and try custom input
+        /// </summary>
+        private void Draw()
+        {
+            ConsoleKeyInfo KeyInfo;
+            StringBuilder userInput = new StringBuilder();
+
+            Writer.DrawText();
+            do
+            {
+                KeyInfo = Console.ReadKey();
+                //TODO: KeyPressEvent for writer to swap buffers
+                userInput.Append(KeyInfo.KeyChar);
+            }
+            while (KeyInfo.Key != ConsoleKey.Enter);
+            Logger.Instance.Debug(GetType(), $"New user input string: {userInput}");
         }
 
         ~ZuulGame()

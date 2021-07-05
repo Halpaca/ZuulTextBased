@@ -51,14 +51,14 @@ namespace ZuulTextBased.Game.World.Structures
 
         public void LinkAreas(Point origin, Direction direction, Point destination)
         {
-            AreaAt(origin).LinkAreas(direction, AreaAt(destination), new Door()); //TOASK: Does the fail process lead to finalization of Door?
+            AreaAt(origin).LinkAreas(direction, AreaAt(destination), new Door());
         }
 
         public Area AreaAt(Point coordinates)
         {
             if (AreaExists(coordinates))
             {
-                return Areas[coordinates]; //stucts compare value types instead of object
+                return Areas[coordinates];
             }
             else
             {

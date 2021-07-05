@@ -8,6 +8,10 @@ namespace ZuulTextBased.Utility.Logging
     internal class Logger
     {
         public static Logger Instance { get; } = new Logger();
+        
+        /// <summary>
+        /// Shows up to which log level the log messages are visible
+        /// </summary>
         public LogLevel LogLevel { get; set; }
         public WriteMode WriteMode { get; set; }
 
@@ -57,6 +61,10 @@ namespace ZuulTextBased.Utility.Logging
             }
         }
 
+        /// <summary>
+        /// Different way of calling the Logger, setting the level as a parameter instead of in the function name.
+        /// The use of this function is solely up to preference
+        /// </summary>
         public void Write(LogLevel level, Type caller, string message)
         {
             switch(WriteMode)

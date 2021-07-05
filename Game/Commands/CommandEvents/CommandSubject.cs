@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using ZuulTextBased.Utility;
 
-namespace ZuulTextBased.Commands.CommandEvents
+namespace ZuulTextBased.Game.Commands.CommandEvents
 {
     /// <summary>
     /// Subject class using observer pattern. Used to send Events to listeners.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ZuulTextBased.Commands;
+using ZuulTextBased.Game.Commands;
 using ZuulTextBased.Utility;
 using ZuulTextBased.Utility.Logging;
 
