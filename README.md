@@ -1,6 +1,6 @@
 # ZuulTextBased
 
-Current working Branch is the Unstable Branch:
+Current working branch is the Unstable Branch:
 https://github.com/Halpaca/ZuulTextBased/tree/unstable
 
 Diagrams are on the wiki page:
