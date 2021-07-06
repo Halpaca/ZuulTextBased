@@ -70,7 +70,7 @@ namespace ZuulTextBased.Utility.Logging
             switch(WriteMode)
             {
                 case WriteMode.Console:
-                    Console.WriteLine($"{DateTime.Now:yyyy-mm-dd hh:mm:ss} [{caller.Name}] [{level}]: {message}");
+                    Console.WriteLine($"{DateTime.Now:yyyy-MM-dd hh:mm:ss} [{caller.Name}] [{level}]: {message}");
                     break;
             }
         }

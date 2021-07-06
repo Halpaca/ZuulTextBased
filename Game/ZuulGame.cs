@@ -42,6 +42,20 @@ namespace ZuulTextBased.Game
         }
 
         /// <summary>
+        /// Event handling for the write and quit events.
+        /// Used when quitting the game or writing to the frontend.
+        /// </summary>
+        public void OnNotify(Event state)
+        {
+            switch (state)
+            {
+                case QuitEvent:
+                    QuitGame();
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Game Loop, does a step for the player, then the dungeon
         /// </summary>
         internal void Run()
@@ -64,20 +78,6 @@ namespace ZuulTextBased.Game
         private void DungeonStep()
         {
             Dungeon.Update();
-        }
-
-        /// <summary>
-        /// Event handling for the write and quit events.
-        /// Used when quitting the game or writing to the frontend.
-        /// </summary>
-        public void OnNotify(Event state)
-        {
-            switch(state)
-            {
-                case QuitEvent:
-                    QuitGame();
-                    break;
-            }
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace ZuulTextBased.Game
             ConsoleKeyInfo KeyInfo;
             StringBuilder userInput = new StringBuilder();
 
-            Writer.DrawText();
+            Writer.Draw();
             do
             {
                 KeyInfo = Console.ReadKey();

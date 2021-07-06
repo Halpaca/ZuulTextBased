@@ -24,11 +24,11 @@ namespace ZuulTextBased.Game.View
 
         //TODO: add a list of potential elements, like a text output element used to write to the output screen for example
 
-        private readonly string _name;
+        public string Name { get; private set; }
 
         public Screen(string name, int x, int y, int width, int height)
         {
-            _name = name;
+            Name = name;
             Borders = new Rectangle(x, y, width, height);
             SubScreens = new LinkedList<Screen>();
         }
@@ -36,16 +36,16 @@ namespace ZuulTextBased.Game.View
         /// <summary>
         /// Adds a subscreen as a node to this screen after validation, used to percieve different info to the player
         /// </summary>
-        public void AddSubScreen(Screen s)
+        public void AddSubScreen(Screen screen)
         {
-            if(SubScreenIsValid(s))
+            if(SubScreenIsValid(screen))
             {
-                SubScreens.AddLast(s);
-                Logger.Instance.Info(GetType(), $"Added screen {s} as a subscreen to {this}");
+                SubScreens.AddLast(screen);
+                Logger.Instance.Info(GetType(), $"Added screen {screen} as a subscreen to {this}");
             }
             else
             {
-                Logger.Instance.Error(GetType(), $"Unable to validate the addition of subscreen {s}, game will have difficulty running");
+                Logger.Instance.Error(GetType(), $"Unable to validate the addition of subscreen {screen}, game will have difficulty running");
             }
         }
 
@@ -54,15 +54,15 @@ namespace ZuulTextBased.Game.View
         /// The subscreen is fully contained within its parent
         /// The subscreen does not intersect with any other subscreens already present
         /// </summary>
-        private bool SubScreenIsValid(Screen s)
+        private bool SubScreenIsValid(Screen screen)
         {
-            if (!Borders.Contains(s.Borders))
+            if (!Borders.Contains(screen.Borders))
             {
                 return false;
             }
             foreach (Screen subScreen in SubScreens)
             {
-                if (subScreen.Borders.IntersectsWith(s.Borders))
+                if (subScreen.Borders.IntersectsWith(screen.Borders))
                 {
                     return false;
                 }
@@ -99,14 +99,14 @@ namespace ZuulTextBased.Game.View
             return p.Y == yAxis && Borders.Contains(p);
         }
 
-        private bool IsCorner(Point p, int xCoord, int yCoord)
+        private bool IsCorner(Point p, int x, int y)
         {
-            return p.X == xCoord && p.Y == yCoord && Borders.Contains(p);
+            return p.X == x && p.Y == y && Borders.Contains(p);
         }
 
         public override string ToString()
         {
-            return _name;
+            return Name;
         }
     }
 }

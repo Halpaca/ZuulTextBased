@@ -7,15 +7,19 @@ using ZuulTextBased.Utility.Logging;
 
 namespace ZuulTextBased.Game.View
 {
+    /// <summary>
+    /// Responsible for showing the player the information needed to play the game, 
+    /// as well as any visual elements like the screen
+    /// </summary>
     internal class Writer : IObserver
     {
         public WriteMode WriteMode { get; set; }
         public Screen ActiveScreen { get; private set; }
         public Point Offset { get; private set; }
 
-        public Writer(Screen s)
+        public Writer(Screen screen)
         {
-            ActiveScreen = s;
+            ActiveScreen = screen;
             //Center the Screen
             int xOffset = (Console.BufferWidth - ActiveScreen.Width) / 2;
             int yOffset = (Console.BufferHeight - ActiveScreen.Height) / 2;
@@ -24,10 +28,16 @@ namespace ZuulTextBased.Game.View
             WriteMode = WriteMode.Console;
         }
 
-        /// <summary>
-        /// The only function that should write out text to the player outside of debug mode
-        /// To be refactored to send to a custom window instead of the console
-        /// </summary>
+        public void OnNotify(Event state)
+        {
+            switch (state)
+            {
+                case WriteEvent:
+                    Write((string)state.Data);
+                    break;
+            }
+        }
+
         public void Write(string message)
         {
             switch (WriteMode)
@@ -38,17 +48,11 @@ namespace ZuulTextBased.Game.View
             }
         }
 
-        public void DrawText()
-        {
-            ClearScreen();
-            DrawScreen();
-            Console.SetCursorPosition(Offset.X + 3, Offset.Y + ActiveScreen.Height - 3);
-            Console.Write("> ");
-        }
-
-        public void ClearScreen()
+        public void Draw()
         {
             Console.Clear();
+            DrawScreen();
+            SetCursorAtPlayerPosition();
         }
 
         private void DrawScreen()
@@ -69,6 +73,13 @@ namespace ZuulTextBased.Game.View
             Console.Write(output);
         }
 
+        private void SetCursorAtPlayerPosition()
+        {
+            //TODO: move to the input subscreen of the game screen
+            Console.SetCursorPosition(Offset.X + 3, Offset.Y + ActiveScreen.Height - 3);
+            Console.Write("> ");
+        }
+
         private char GetScreenChar(BorderType area)
         {
             return area switch
@@ -86,16 +97,6 @@ namespace ZuulTextBased.Game.View
                 BorderType.CrossSection => '╬',
                 _ => ' '
             };
-        }
-
-        public void OnNotify(Event state)
-        {
-            switch (state)
-            {
-                case WriteEvent:
-                    Write((string)state.Data);
-                    break;
-            }
         }
     }
 }
