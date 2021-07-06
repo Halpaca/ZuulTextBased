@@ -13,10 +13,10 @@ namespace ZuulTextBased.Utility
         TopRight,
         BottomLeft,
         BottomRight,
-        TSplitTop,
-        TSplitBottom,
-        TSplitLeft,
-        TSplitRight,
+        TCrossTop,
+        TCrossBottom,
+        TCrossLeft,
+        TCrossRight,
         CrossSection
     }
 }

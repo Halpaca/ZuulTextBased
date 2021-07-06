@@ -35,9 +35,10 @@ namespace ZuulTextBased.Game
 
             Interpreter = new Interpreter();
 
-            Writer = new Writer(new Screen("GameScreen", 0, 0, 128, 48));
-            Writer.ActiveScreen.AddSubScreen(new Screen("OutputArea", 0, 0, 128, 43));
-            Writer.ActiveScreen.AddSubScreen(new Screen("InputArea", 0, 43, 128, 5));
+            Writer = new Writer(new Screen("GameScreen", 0, 0, 127, 47));
+            Writer.ActiveScreen.AddSubScreen(new Screen("Test1", 0, 0, 127, 43));
+            //TODO: Fix the Non overlap
+            Writer.ActiveScreen.AddSubScreen(new Screen("Test2", 0, 43, 127, 4));
             CommandSubject.Subscibe(Writer);
         }
 
@@ -63,6 +64,7 @@ namespace ZuulTextBased.Game
             Writer.Write("Welcome, type stuff below:");
             do
             {
+                Draw();
                 PlayerStep();
                 DungeonStep();
             }

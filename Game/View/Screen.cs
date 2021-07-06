@@ -14,10 +14,12 @@ namespace ZuulTextBased.Game.View
     class Screen
     {
         public Rectangle Borders { get; private set; }
-        public int X => Borders.X;
-        public int Y => Borders.Y;
         public int Width => Borders.Width;
         public int Height => Borders.Height;
+        public int Top => Borders.Top;
+        public int Bottom => Borders.Bottom;
+        public int Left => Borders.Left;
+        public int Right => Borders.Right;
 
         //Subscreens are used to draw extra borders and later have roles of showing info to the player (TODO)
         public LinkedList<Screen> SubScreens { get; private set; }
@@ -38,7 +40,8 @@ namespace ZuulTextBased.Game.View
         /// </summary>
         public void AddSubScreen(Screen screen)
         {
-            if(SubScreenIsValid(screen))
+            screen.Offset(Borders.X, Borders.Y);
+            if (SubScreenIsValid(screen))
             {
                 SubScreens.AddLast(screen);
                 Logger.Instance.Info(GetType(), $"Added screen {screen} as a subscreen to {this}");
@@ -70,6 +73,39 @@ namespace ZuulTextBased.Game.View
             return true;
         }
 
+        public void Offset(int x, int y)
+        {
+            Rectangle BorderOffset = Borders;
+            BorderOffset.Offset(x, y);
+            Borders = BorderOffset;
+        }
+
+        public BorderType Test(Point coords)
+        {
+            BorderType border = FindBorder(coords);
+            foreach(Screen subScreen in SubScreens)
+            {
+                BorderType subBorder = subScreen.FindBorder(coords);
+                if(border == BorderType.None && subBorder != BorderType.None)
+                {
+                    border = subBorder;
+                }
+            }
+            return border;
+        }
+
+        private BorderType FindBorder(Point coords)
+        {
+            if(Contains(coords))
+            {
+                if (IsOnBorder(coords))
+                {
+                    return GetBorderTypeAt(coords);
+                }
+            }
+            return BorderType.None;
+        }
+
         /// <summary>
         /// Used for drawing the screen and to determine is the current drawing coordinates are on a part of a border
         /// Currently distinguishes Horizontal, Vertical, and Corners
@@ -78,30 +114,35 @@ namespace ZuulTextBased.Game.View
         {
             return p switch
             {
-                _ when IsCorner(p, Borders.X, Borders.Y) => BorderType.TopLeft,
-                _ when IsCorner(p, Borders.Width - 1, Borders.Y) => BorderType.TopRight,
-                _ when IsCorner(p, Borders.X, Borders.Height - 1) => BorderType.BottomLeft,
-                _ when IsCorner(p, Borders.Width - 1, Borders.Height - 1) => BorderType.BottomRight,
-                _ when IsVerticalAxis(p, Borders.X) || IsVerticalAxis(p, Borders.Width - 1) => BorderType.Vertical,
-                _ when IsHorizotantalAxis(p, Borders.Y) || IsHorizotantalAxis(p, Borders.Height - 1) => BorderType.Horizontal,
+                _ when p.Y == Borders.Top && p.X == Borders.Left => BorderType.TopLeft,
+                _ when p.Y == Borders.Top && p.X == Borders.Right => BorderType.TopRight,
+                _ when p.Y == Borders.Bottom && p.X == Borders.Left => BorderType.BottomLeft,
+                _ when p.Y == Borders.Bottom && p.X == Borders.Right => BorderType.BottomRight,
+                _ when IsLeftOrRight(p) => BorderType.Vertical,
+                _ when IsTopOrBottom(p) => BorderType.Horizontal,
                 _ => BorderType.None
                 //TODO: Add support for sub screens by adding clauses for T-Splits ╦ ╩ ╠ ╣ and Cross Section ╬
             };
         }
 
-        private bool IsVerticalAxis(Point p, int xAxis)
+        private bool IsOnBorder(Point p)
         {
-            return p.X == xAxis && Borders.Contains(p);
+            return IsTopOrBottom(p) || IsLeftOrRight(p);
         }
 
-        private bool IsHorizotantalAxis(Point p, int yAxis)
+        private bool IsLeftOrRight(Point p)
         {
-            return p.Y == yAxis && Borders.Contains(p);
+            return (p.X == Borders.Left || p.X == Borders.Right) /*&& Borders.Contains(p)*/;
         }
 
-        private bool IsCorner(Point p, int x, int y)
+        private bool IsTopOrBottom(Point p)
         {
-            return p.X == x && p.Y == y && Borders.Contains(p);
+            return (p.Y == Borders.Top || p.Y == Borders.Bottom) /*&& Borders.Contains(p)*/;
+        }
+
+        private bool Contains(Point p)
+        {
+            return p.X >= Borders.Left && p.X <= Borders.Right && p.Y >= Borders.Top && p.Y <= Borders.Bottom;
         }
 
         public override string ToString()

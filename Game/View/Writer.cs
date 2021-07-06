@@ -15,15 +15,14 @@ namespace ZuulTextBased.Game.View
     {
         public WriteMode WriteMode { get; set; }
         public Screen ActiveScreen { get; private set; }
-        public Point Offset { get; private set; }
 
         public Writer(Screen screen)
         {
             ActiveScreen = screen;
             //Center the Screen
-            int xOffset = (Console.BufferWidth - ActiveScreen.Width) / 2;
-            int yOffset = (Console.BufferHeight - ActiveScreen.Height) / 2;
-            Offset = new Point(xOffset, yOffset);
+            int xOffset = (Console.BufferWidth - ActiveScreen.Borders.Width) / 2;
+            int yOffset = (Console.BufferHeight - ActiveScreen.Borders.Height) / 2;
+            screen.Offset(xOffset, yOffset);
 
             WriteMode = WriteMode.Console;
         }
@@ -59,13 +58,13 @@ namespace ZuulTextBased.Game.View
         {
             StringBuilder output = new StringBuilder();
             Point p = new Point();
-            for (int y = -Offset.Y; y < ActiveScreen.Height; y++)
+            for (int y = 0; y < Console.BufferHeight; y++)
             {
-                for (int x = -Offset.X; x < ActiveScreen.Width; x++)
+                for (int x = 0; x < Console.BufferWidth; x++)
                 {
                     p.X = x;
                     p.Y = y;
-                    char c = GetScreenChar(ActiveScreen.GetBorderTypeAt(p));
+                    char c = GetScreenChar(ActiveScreen.Test(p));
                     output.Append(c);
                 }
                 output.AppendLine();
@@ -76,7 +75,7 @@ namespace ZuulTextBased.Game.View
         private void SetCursorAtPlayerPosition()
         {
             //TODO: move to the input subscreen of the game screen
-            Console.SetCursorPosition(Offset.X + 3, Offset.Y + ActiveScreen.Height - 3);
+            Console.SetCursorPosition(ActiveScreen.Left + 3, ActiveScreen.Bottom - 3);
             Console.Write("> ");
         }
 
@@ -90,10 +89,10 @@ namespace ZuulTextBased.Game.View
                 BorderType.TopRight => '╗',
                 BorderType.BottomLeft => '╚',
                 BorderType.BottomRight => '╝',
-                BorderType.TSplitTop => '╦',
-                BorderType.TSplitBottom => '╩',
-                BorderType.TSplitLeft => '╠',
-                BorderType.TSplitRight => '╣',
+                BorderType.TCrossTop => '╦',
+                BorderType.TCrossBottom => '╩',
+                BorderType.TCrossLeft => '╠',
+                BorderType.TCrossRight => '╣',
                 BorderType.CrossSection => '╬',
                 _ => ' '
             };
