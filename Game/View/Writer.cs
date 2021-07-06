@@ -9,21 +9,19 @@ namespace ZuulTextBased.Game.View
 {
     internal class Writer : IObserver
     {
-        public WriteMode WriteTarget { get; set; }
+        public WriteMode WriteMode { get; set; }
         public Screen ActiveScreen { get; private set; }
         public Point Offset { get; private set; }
 
-        public Writer(int width, int height)
-        { 
-            ActiveScreen = new Screen("GameScreen", 0, 0, width, height);
-            ActiveScreen.AddSubScreen(new Screen("OutputArea", 0, 0, width, height - 5));
-            ActiveScreen.AddSubScreen(new Screen("InputArea", 0, height - 5, width, 5));
+        public Writer(Screen s)
+        {
+            ActiveScreen = s;
             //Center the Screen
             int xOffset = (Console.BufferWidth - ActiveScreen.Width) / 2;
             int yOffset = (Console.BufferHeight - ActiveScreen.Height) / 2;
             Offset = new Point(xOffset, yOffset);
 
-            WriteTarget = WriteMode.Console;
+            WriteMode = WriteMode.Console;
         }
 
         /// <summary>
@@ -32,7 +30,7 @@ namespace ZuulTextBased.Game.View
         /// </summary>
         public void Write(string message)
         {
-            switch (WriteTarget)
+            switch (WriteMode)
             {
                 case WriteMode.Console:
                     Console.WriteLine(message);

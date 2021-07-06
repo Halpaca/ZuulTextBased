@@ -35,7 +35,9 @@ namespace ZuulTextBased.Game
 
             Interpreter = new Interpreter();
 
-            Writer = new Writer(128, 48);
+            Writer = new Writer(new Screen("GameScreen", 0, 0, 128, 48));
+            Writer.ActiveScreen.AddSubScreen(new Screen("OutputArea", 0, 0, 128, 43));
+            Writer.ActiveScreen.AddSubScreen(new Screen("InputArea", 0, 43, 128, 5));
             CommandSubject.Subscibe(Writer);
         }
 
