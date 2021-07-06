@@ -47,6 +47,7 @@ namespace ZuulTextBased.Game
             Writer.Write("Welcome, type stuff below:");
             do
             {
+                Draw();
                 PlayerStep();
                 DungeonStep();
             }

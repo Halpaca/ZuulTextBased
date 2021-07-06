@@ -6,11 +6,9 @@ namespace ZuulTextBased.Utility
 {
     internal enum BorderType
     {
-        Invalid,
-        Top,
-        Bottom,
-        Left,
-        Right,
+        None,
+        Horizontal,
+        Vertical,
         TopLeft,
         TopRight,
         BottomLeft,

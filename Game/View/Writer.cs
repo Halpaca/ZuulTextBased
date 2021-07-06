@@ -75,8 +75,8 @@ namespace ZuulTextBased.Game.View
         {
             return area switch
             {
-                _ when area == BorderType.Top || area == BorderType.Bottom => '═',
-                _ when area == BorderType.Left || area == BorderType.Right => '║',
+                BorderType.Horizontal => '═',
+                BorderType.Vertical => '║',
                 BorderType.TopLeft => '╔',
                 BorderType.TopRight => '╗',
                 BorderType.BottomLeft => '╚',
